@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VetVida — Hospital & Clínica Veterinária</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header/Navbar -->
+    <header class="navbar">
+        <div class="container navbar-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-paw"></i> Vet<span>Vida</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#servicos">Especialidades</a>
+                <a href="#equipa">A Equipa</a>
+                <a href="#agendamento" class="btn btn-primary">Marcar Consulta</a>
+                <a href="../../index.html" class="hub-back"><i class="fa-solid fa-arrow-left"></i> Hub</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-text">
+                <span class="badge"><i class="fa-solid fa-heart"></i> O melhor amigo do seu animal</span>
+                <h1>Cuidados de saúde com carinho e dedicação.</h1>
+                <p>Na VetVida proporcionamos serviços veterinários de excelência. Desde consultas preventivas a cirurgias avançadas, acompanhamos o seu pet em todas as etapas da vida.</p>
+                <div class="hero-actions">
+                    <a href="#agendamento" class="btn btn-primary">Agendar Consulta</a>
+                    <a href="#servicos" class="btn btn-secondary">Ver Especialidades</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="pet-cards-stack">
+                    <div class="pet-badge-card dog">
+                        <span class="emoji">🐶</span>
+                        <div class="info">
+                            <strong>Bobi</strong>
+                            <span>Consulta de Rotina realizada</span>
+                        </div>
+                    </div>
+                    <div class="pet-badge-card cat">
+                        <span class="emoji">🐱</span>
+                        <div class="info">
+                            <strong>Luna</strong>
+                            <span>Plano de Vacinação Completo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services / Especialidades -->
+    <section id="servicos" class="services">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>As Nossas Especialidades</h2>
+                <p>Cobrimos todas as necessidades médicas e estéticas do seu animal com equipamentos de última geração.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon-wrap"><i class="fa-solid fa-user-doctor"></i></div>
+                    <h3>Consultas Médicas</h3>
+                    <p>Consultas gerais, pediatria, geriatria e planos preventivos para cães, gatos e animais exóticos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-wrap"><i class="fa-solid fa-syringe"></i></div>
+                    <h3>Vacinas & Chips</h3>
+                    <p>Desparasitação interna e externa, vacinas obrigatórias e colocação de microchip de identificação.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-wrap"><i class="fa-solid fa-hand-holding-medical"></i></div>
+                    <h3>Cirurgia Geral</h3>
+                    <p>Bloco operatório totalmente equipado para esterilizações, cirurgias de tecidos moles e ortopedia.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-wrap"><i class="fa-solid fa-soap"></i></div>
+                    <h3>Tosquia & Banhos</h3>
+                    <p>Serviços de higiene essenciais para a saúde da pele e do pelo, adaptados a cada raça.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Veterinarian Team Section -->
+    <section id="equipa" class="team-section">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Conheça a Nossa Equipa</h2>
+                <p>Veterinários e assistentes qualificados e apaixonados pelo bem-estar animal.</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">CF</div>
+                    <h3>Drª Clara Ferreira</h3>
+                    <span class="role">Diretora Clínica · Cães e Gatos</span>
+                    <p>Licenciada em Medicina Veterinária, conta com mais de 10 anos de experiência em cirurgia de tecidos moles e cardiologia.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">RS</div>
+                    <h3>Dr. Ricardo Santos</h3>
+                    <span class="role">Médico Veterinário · Animais Exóticos</span>
+                    <p>Especialista em répteis, aves e pequenos mamíferos. Dedica-se a tratar dos animais mais invulgares da nossa comunidade.</p>
+                </div>
+                <div class="team-card">
+                    <div class="team-avatar">MA</div>
+                    <h3>Drª Marta Araújo</h3>
+                    <span class="role">Veterinária · Dermatologia</span>
+                    <p>Focada no diagnóstico de alergias, problemas dermatológicos crónicos e planos de nutrição animal personalizados.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Appointment Widget -->
+    <section id="agendamento" class="booking">
+        <div class="container">
+            <div class="booking-layout">
+                <div class="booking-intro">
+                    <h2>Agende uma Consulta Online</h2>
+                    <p>Utilize o nosso simulador interativo para escolher o médico, especialidade e o melhor horário para o seu amigo de quatro patas. Confirmamos por SMS.</p>
+                    
+                    <div class="faq-accordion">
+                        <div class="faq-item">
+                            <h4><i class="fa-regular fa-circle-question"></i> Têm urgências 24 horas?</h4>
+                            <p>Sim, dispomos de um serviço de piquete para urgências fora do horário normal. Telefone: +351 912 999 888.</p>
+                        </div>
+                        <div class="faq-item">
+                            <h4><i class="fa-regular fa-circle-question"></i> Quais os animais que atendem?</h4>
+                            <p>Atendemos cães, gatos, coelhos, roedores, aves, répteis e outros animais de companhia exóticos.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="booking-card">
+                    <form id="vetBookingForm" class="vet-form">
+                        <div class="form-group">
+                            <label for="pet_type">Tipo de Animal</label>
+                            <select id="pet_type" required>
+                                <option value="Cão">🐶 Cão</option>
+                                <option value="Gato">🐱 Gato</option>
+                                <option value="Exótico">🐰 Ave / Roedor / Exótico</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="vet_selected">Médico Veterinário</label>
+                            <select id="vet_selected" required>
+                                <option value="Drª Clara Ferreira">Drª Clara Ferreira (Cães/Gatos)</option>
+                                <option value="Dr. Ricardo Santos">Dr. Ricardo Santos (Exóticos)</option>
+                                <option value="Drª Marta Araújo">Drª Marta Araújo (Dermatologia)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="owner_name">Nome do Proprietário</label>
+                            <input type="text" id="owner_name" required placeholder="Ex: José Maria Cabral">
+                        </div>
+                        <div class="form-group">
+                            <label for="owner_phone">Número de Telemóvel</label>
+                            <input type="tel" id="owner_phone" required placeholder="Ex: 912 345 678">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="visit_date">Data</label>
+                                <input type="date" id="visit_date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="visit_time">Hora</label>
+                                <select id="visit_time">
+                                    <option value="09:30">09:30</option>
+                                    <option value="11:30">11:30</option>
+                                    <option value="14:30">14:30</option>
+                                    <option value="16:30">16:30</option>
+                                    <option value="18:30">18:30</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block"><i class="fa-regular fa-calendar-check"></i> Submeter Marcação</button>
+                    </form>
+
+                    <!-- Success State -->
+                    <div id="vetBookingSuccess" class="success-wrap hidden">
+                        <i class="fa-solid fa-circle-check checked-icon"></i>
+                        <h3>Consulta Pré-Agendada!</h3>
+                        <p>Olá, <strong id="outOwner"></strong>.</p>
+                        <p>Registámos o pedido para o seu <strong id="outPet"></strong> com o especialista <strong id="outVet"></strong>.</p>
+                        <p>Agendado para o dia <strong id="outDate"></strong> às <strong id="outTime"></strong>.</p>
+                        <p class="sms-note">📩 Enviámos um SMS de confirmação para o número <strong id="outPhone"></strong>.</p>
+                        <button class="btn btn-secondary btn-block" onclick="resetVetForm()">Agendar Outra Consulta</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="logo">
+                <i class="fa-solid fa-paw"></i> Vet<span>Vida</span>
+            </div>
+            <p>&copy; 2026 VetVida — Projeto de Portfólio JV Digital</p>
+            <a href="../../index.html" class="btn btn-secondary btn-small"><i class="fa-solid fa-arrow-left"></i> Voltar ao Hub Central</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

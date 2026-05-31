@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080">
+    <title>Post 4 – JV Digital | Barbearia</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { width: 1080px; height: 1080px; overflow: hidden; font-family: 'Outfit', sans-serif; }
+        .post {
+            width: 1080px; height: 1080px;
+            background: #0c0c0c;
+            position: relative;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Grid texture */
+        .grid-bg {
+            position: absolute; inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Atmospheric glows */
+        .glow-red { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(180,20,20,0.3) 0%, transparent 70%); bottom: -100px; right: -100px; }
+        .glow-gold { position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(200,160,30,0.15) 0%, transparent 70%); top: 50px; left: 50px; }
+
+        /* Left big number decoration */
+        .big-num {
+            position: absolute;
+            left: 50px;
+            bottom: 80px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 320px;
+            color: rgba(255,255,255,0.03);
+            line-height: 1;
+            user-select: none;
+        }
+
+        /* Top bar */
+        .top-bar {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 70px;
+            background: rgba(0,0,0,0.8);
+            border-bottom: 2px solid #c41111;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 80px;
+        }
+        .top-bar .brand { color: #fff; font-size: 18px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; }
+        .top-bar .brand span { color: #c41111; }
+        .top-bar .category { color: rgba(255,255,255,0.4); font-size: 13px; letter-spacing: 2px; text-transform: uppercase; }
+
+        /* Main content area */
+        .content-area {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 0 80px;
+            gap: 60px;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Phone mockup */
+        .phone-wrapper {
+            flex-shrink: 0;
+            filter: drop-shadow(0 20px 50px rgba(0,0,0,0.9)) drop-shadow(0 0 30px rgba(196,17,17,0.4));
+        }
+        .phone {
+            width: 230px;
+            background: #111;
+            border-radius: 32px;
+            border: 3px solid #222;
+            overflow: hidden;
+        }
+        .phone-notch { width: 80px; height: 22px; background: #111; border-radius: 0 0 14px 14px; margin: 0 auto; }
+        .phone-screen { background: #0f0f0f; height: 420px; overflow: hidden; }
+        .phone-hero-barber {
+            width: 100%; height: 170px;
+            background: linear-gradient(135deg, #1a0505, #2d0808);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            font-size: 70px;
+        }
+        .phone-hero-barber::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+        }
+        .barber-name {
+            position: absolute;
+            bottom: 12px; left: 12px;
+            z-index: 2;
+            color: #fff;
+            font-size: 16px;
+            font-weight: 800;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 2px;
+        }
+        .barber-tag {
+            position: absolute;
+            top: 12px; right: 12px;
+            z-index: 2;
+            background: #c41111;
+            color: #fff;
+            font-size: 7px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .phone-services { padding: 14px 12px; }
+        .services-label { color: rgba(255,255,255,0.4); font-size: 8px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
+        .service-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .service-name { color: #ddd; font-size: 10px; font-weight: 500; }
+        .service-info { text-align: right; }
+        .service-price { color: #c41111; font-size: 11px; font-weight: 700; }
+        .service-time { color: rgba(255,255,255,0.3); font-size: 8px; }
+        .book-btn {
+            margin: 12px;
+            background: #c41111;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            color: #fff;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Right text content */
+        .text-content { flex: 1; }
+        .pill-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(196,17,17,0.12);
+            border: 1px solid rgba(196,17,17,0.35);
+            color: #e04444;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 7px 16px;
+            border-radius: 30px;
+            margin-bottom: 24px;
+        }
+        .main-title {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 88px;
+            line-height: 0.95;
+            color: #fff;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+        .main-title .accent { color: #c41111; }
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.6;
+            margin-bottom: 36px;
+            font-weight: 300;
+        }
+        .features { display: flex; flex-direction: column; gap: 14px; margin-bottom: 40px; }
+        .feature { display: flex; align-items: center; gap: 14px; }
+        .check {
+            width: 28px; height: 28px;
+            background: rgba(196,17,17,0.15);
+            border: 1px solid rgba(196,17,17,0.4);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #e04444; font-size: 13px;
+            flex-shrink: 0;
+        }
+        .feature-text { color: rgba(255,255,255,0.75); font-size: 16px; }
+        .cta-row { display: flex; align-items: center; gap: 20px; }
+        .cta-btn {
+            background: #c41111;
+            color: #fff; font-size: 15px; font-weight: 700;
+            letter-spacing: 1px; text-transform: uppercase;
+            padding: 16px 34px; border-radius: 10px;
+        }
+        .cta-price { color: rgba(255,255,255,0.5); font-size: 15px; }
+        .cta-price strong { color: #fff; font-size: 20px; }
+
+        /* Bottom bar */
+        .bottom-bar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 65px;
+            background: rgba(196,17,17,0.9);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 80px;
+        }
+        .bottom-bar .logo { color: #fff; font-size: 20px; font-weight: 800; letter-spacing: 3px; }
+        .bottom-bar .handle { color: rgba(255,255,255,0.7); font-size: 14px; }
+        .bottom-bar .website { color: rgba(255,255,255,0.7); font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="post">
+        <div class="grid-bg"></div>
+        <div class="glow-red"></div>
+        <div class="glow-gold"></div>
+        <div class="big-num">✂</div>
+
+        <div class="top-bar">
+            <div class="brand">JV <span>Digital</span></div>
+            <div class="category">✂ Barbearia &amp; Beleza</div>
+        </div>
+
+        <div class="content-area" style="margin-top: 30px;">
+            <!-- Phone -->
+            <div class="phone-wrapper">
+                <div class="phone">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="phone-hero-barber">
+                            💈
+                            <div class="barber-tag">Aberto Hoje</div>
+                            <div class="barber-name">Barbearia Prime</div>
+                        </div>
+                        <div class="phone-services">
+                            <div class="services-label">Serviços &amp; Preços</div>
+                            <div class="service-row">
+                                <div class="service-name">Corte Clássico</div>
+                                <div class="service-info"><div class="service-price">12€</div><div class="service-time">30 min</div></div>
+                            </div>
+                            <div class="service-row">
+                                <div class="service-name">Barba Completa</div>
+                                <div class="service-info"><div class="service-price">10€</div><div class="service-time">20 min</div></div>
+                            </div>
+                            <div class="service-row">
+                                <div class="service-name">Corte + Barba</div>
+                                <div class="service-info"><div class="service-price">20€</div><div class="service-time">45 min</div></div>
+                            </div>
+                            <div class="service-row">
+                                <div class="service-name">Tratamento Beard</div>
+                                <div class="service-info"><div class="service-price">18€</div><div class="service-time">40 min</div></div>
+                            </div>
+                            <div class="book-btn">MARCAR AGENDAMENTO</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text -->
+            <div class="text-content">
+                <div class="pill-tag">✂ Para Barbearias</div>
+                <div class="main-title">O SEU<br><span class="accent">NEGÓCIO</span><br>ONLINE</div>
+                <p class="subtitle">Um site profissional que mostra os seus serviços, preços e aceita marcações 24 horas por dia.</p>
+                <div class="features">
+                    <div class="feature"><div class="check">✓</div><div class="feature-text">Lista de serviços com preços</div></div>
+                    <div class="feature"><div class="check">✓</div><div class="feature-text">Sistema de marcação integrado</div></div>
+                    <div class="feature"><div class="check">✓</div><div class="feature-text">Galeria de trabalhos realizados</div></div>
+                    <div class="feature"><div class="check">✓</div><div class="feature-text">Mapa e horários de funcionamento</div></div>
+                </div>
+                <div class="cta-row">
+                    <div class="cta-btn">Quero o meu site →</div>
+                    <div class="cta-price">A partir de <strong>300€</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <div class="logo">JVDIGITAL</div>
+            <div class="handle">@jvdigital.pt</div>
+            <div class="website">www.jvdigital.pt</div>
+        </div>
+    </div>
+</body>
+</html>

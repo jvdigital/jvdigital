@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080">
+    <title>Post 5 – JV Digital | Antes vs Depois</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { width: 1080px; height: 1080px; overflow: hidden; font-family: 'Outfit', sans-serif; }
+        .post {
+            width: 1080px; height: 1080px;
+            background: #080c12;
+            position: relative; display: flex;
+            flex-direction: column; align-items: center;
+            overflow: hidden;
+        }
+
+        /* Background glows */
+        .glow-blue  { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(59,130,246,0.2) 0%, transparent 70%); bottom: 0; right: 0; }
+        .glow-red   { position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(239,68,68,0.12) 0%, transparent 70%); top: 0; left: 0; }
+
+        /* Top badge */
+        .top-badge {
+            margin-top: 55px;
+            background: rgba(59,130,246,0.12);
+            border: 1px solid rgba(59,130,246,0.35);
+            color: #60a5fa;
+            font-size: 12px; font-weight: 700;
+            letter-spacing: 3px; text-transform: uppercase;
+            padding: 8px 22px; border-radius: 30px;
+        }
+
+        /* Title */
+        .title-block { margin-top: 28px; text-align: center; }
+        .title-block h1 {
+            font-size: 72px; font-weight: 900;
+            color: #fff; line-height: 1;
+            letter-spacing: -1px;
+        }
+        .title-block h1 .bad  { color: #ef4444; }
+        .title-block h1 .good { color: #3b82f6; }
+        .title-block p {
+            margin-top: 10px;
+            color: rgba(255,255,255,0.45);
+            font-size: 18px; font-weight: 300;
+        }
+
+        /* Comparison area */
+        .comparison {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            margin-top: 36px;
+            width: 920px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+        }
+
+        /* ANTES panel */
+        .panel-before {
+            flex: 1;
+            background: #12151a;
+            border: 1px solid rgba(239,68,68,0.25);
+            padding: 28px;
+            position: relative;
+        }
+        .panel-before::after {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 3px; background: #ef4444;
+        }
+        .panel-label-before {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(239,68,68,0.15);
+            border: 1px solid rgba(239,68,68,0.4);
+            color: #ef4444; font-size: 12px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 5px 14px; border-radius: 6px;
+            margin-bottom: 18px;
+        }
+
+        /* Fake old site mockup */
+        .old-site {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #ccc;
+            height: 320px;
+        }
+        .old-nav { background: #c0c0c0; padding: 8px 12px; display: flex; gap: 8px; align-items: center; }
+        .old-dot { width: 10px; height: 10px; border-radius: 50%; background: #999; }
+        .old-url { flex: 1; background: #eee; border-radius: 3px; height: 16px; }
+        .old-body { padding: 12px; }
+        .old-h { background: #c8c8c8; height: 18px; width: 70%; border-radius: 3px; margin-bottom: 10px; }
+        .old-sub { background: #ddd; height: 12px; width: 100%; border-radius: 3px; margin-bottom: 6px; }
+        .old-sub.s60 { width: 60%; }
+        .old-table { border: 2px solid #aaa; margin-top: 10px; }
+        .old-tr { display: flex; border-bottom: 1px solid #ccc; }
+        .old-td { flex: 1; background: #e5e5e5; height: 14px; margin: 4px 3px; border-radius: 2px; }
+        .old-td.h { background: #aaa; }
+        .old-img-box { margin-top: 10px; width: 100%; height: 50px; background: #bbb; border-radius: 4px; display: flex; align-items: center; justify-content: center; color: #888; font-size: 11px; }
+        .old-btn { margin-top: 8px; background: #999; border-radius: 3px; height: 20px; width: 80px; }
+
+        .bad-points { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+        .bad-point { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.55); font-size: 14px; }
+        .x-icon { color: #ef4444; font-size: 16px; font-weight: 800; }
+
+        /* VS divider */
+        .vs-divider {
+            width: 60px; background: #080c12;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0; position: relative;
+        }
+        .vs-circle {
+            width: 52px; height: 52px;
+            background: linear-gradient(135deg, #ef4444, #3b82f6);
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 16px; font-weight: 900;
+            box-shadow: 0 0 30px rgba(59,130,246,0.5);
+            z-index: 2;
+        }
+        .vs-line {
+            position: absolute; top: 0; bottom: 0;
+            width: 1px;
+            background: linear-gradient(180deg, transparent, rgba(59,130,246,0.4), transparent);
+            left: 50%;
+        }
+
+        /* DEPOIS panel */
+        .panel-after {
+            flex: 1;
+            background: #0d1220;
+            border: 1px solid rgba(59,130,246,0.25);
+            padding: 28px;
+            position: relative;
+        }
+        .panel-after::after {
+            content: '';
+            position: absolute; top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+        }
+        .panel-label-after {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(59,130,246,0.15);
+            border: 1px solid rgba(59,130,246,0.4);
+            color: #60a5fa; font-size: 12px; font-weight: 700;
+            letter-spacing: 2px; text-transform: uppercase;
+            padding: 5px 14px; border-radius: 6px;
+            margin-bottom: 18px;
+        }
+
+        /* Modern site mockup */
+        .new-site {
+            background: #0f172a;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 1px solid rgba(59,130,246,0.3);
+            height: 320px;
+            box-shadow: 0 0 20px rgba(59,130,246,0.15);
+        }
+        .new-nav {
+            background: rgba(255,255,255,0.05);
+            padding: 8px 12px;
+            display: flex; gap: 8px; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .new-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .new-dot.r { background: #ef4444; }
+        .new-dot.y { background: #f59e0b; }
+        .new-dot.g { background: #22c55e; }
+        .new-url { flex: 1; background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2); border-radius: 4px; height: 16px; margin-left: 8px; }
+        .new-body { padding: 14px; }
+        .new-hero { background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(99,102,241,0.15)); border-radius: 8px; padding: 14px; margin-bottom: 12px; }
+        .new-h { height: 14px; background: linear-gradient(90deg, #3b82f6, #60a5fa); border-radius: 6px; width: 55%; margin-bottom: 6px; }
+        .new-sub { height: 8px; background: rgba(255,255,255,0.15); border-radius: 4px; width: 80%; margin-bottom: 4px; }
+        .new-sub.s50 { width: 50%; }
+        .new-btn-sm { margin-top: 8px; background: #3b82f6; border-radius: 6px; height: 18px; width: 70px; }
+        .new-cards { display: flex; gap: 6px; }
+        .new-card { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 8px; padding: 8px; }
+        .new-card-icon { width: 20px; height: 20px; border-radius: 6px; background: rgba(59,130,246,0.3); margin-bottom: 5px; }
+        .new-card-h { height: 8px; background: rgba(255,255,255,0.3); border-radius: 3px; width: 70%; margin-bottom: 4px; }
+        .new-card-sub { height: 6px; background: rgba(255,255,255,0.12); border-radius: 3px; }
+
+        .good-points { margin-top: 14px; display: flex; flex-direction: column; gap: 8px; }
+        .good-point { display: flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.75); font-size: 14px; }
+        .check-icon { color: #22c55e; font-size: 16px; font-weight: 800; }
+
+        /* Bottom CTA strip */
+        .cta-strip {
+            margin-top: 28px;
+            width: 920px;
+            background: linear-gradient(90deg, rgba(59,130,246,0.15), rgba(99,102,241,0.1));
+            border: 1px solid rgba(59,130,246,0.3);
+            border-radius: 14px;
+            padding: 20px 36px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .cta-text h3 { color: #fff; font-size: 20px; font-weight: 700; }
+        .cta-text p { color: rgba(255,255,255,0.45); font-size: 14px; margin-top: 2px; }
+        .cta-btn {
+            background: linear-gradient(90deg, #2563eb, #3b82f6);
+            color: #fff; font-size: 15px; font-weight: 700;
+            letter-spacing: 1px; padding: 14px 32px;
+            border-radius: 10px; white-space: nowrap;
+        }
+
+        /* Bottom bar */
+        .bottom-bar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0; height: 60px;
+            background: rgba(0,0,0,0.8);
+            border-top: 1px solid rgba(59,130,246,0.2);
+            display: flex; align-items: center;
+            justify-content: space-between; padding: 0 80px;
+        }
+        .jv-logo { color: #3b82f6; font-size: 18px; font-weight: 800; letter-spacing: 2px; }
+        .jv-logo span { color: rgba(255,255,255,0.4); font-weight: 300; }
+        .handle { color: rgba(255,255,255,0.35); font-size: 13px; }
+    </style>
+</head>
+<body>
+    <div class="post">
+        <div class="glow-blue"></div>
+        <div class="glow-red"></div>
+
+        <div class="top-badge">✨ Transformação Digital · JV Digital</div>
+
+        <div class="title-block">
+            <h1><span class="bad">ANTES</span> vs <span class="good">DEPOIS</span></h1>
+            <p>A diferença entre um site amador e um site profissional</p>
+        </div>
+
+        <div class="comparison">
+            <!-- ANTES -->
+            <div class="panel-before">
+                <div class="panel-label-before">✕ ANTES — Site Antigo</div>
+                <div class="old-site">
+                    <div class="old-nav">
+                        <div class="old-dot"></div><div class="old-dot"></div><div class="old-dot"></div>
+                        <div class="old-url"></div>
+                    </div>
+                    <div class="old-body">
+                        <div class="old-h"></div>
+                        <div class="old-sub"></div>
+                        <div class="old-sub s60"></div>
+                        <div class="old-img-box">📷 Imagem em falta</div>
+                        <div class="old-table">
+                            <div class="old-tr"><div class="old-td h"></div><div class="old-td h"></div><div class="old-td h"></div></div>
+                            <div class="old-tr"><div class="old-td"></div><div class="old-td"></div><div class="old-td"></div></div>
+                            <div class="old-tr"><div class="old-td"></div><div class="old-td"></div><div class="old-td"></div></div>
+                        </div>
+                        <div class="old-btn"></div>
+                    </div>
+                </div>
+                <div class="bad-points">
+                    <div class="bad-point"><span class="x-icon">✕</span> Design desatualizado e amador</div>
+                    <div class="bad-point"><span class="x-icon">✕</span> Não funciona no telemóvel</div>
+                    <div class="bad-point"><span class="x-icon">✕</span> Carrega muito lento</div>
+                    <div class="bad-point"><span class="x-icon">✕</span> Perde clientes para a concorrência</div>
+                </div>
+            </div>
+
+            <!-- VS -->
+            <div class="vs-divider">
+                <div class="vs-line"></div>
+                <div class="vs-circle">VS</div>
+            </div>
+
+            <!-- DEPOIS -->
+            <div class="panel-after">
+                <div class="panel-label-after">✓ DEPOIS — JV Digital</div>
+                <div class="new-site">
+                    <div class="new-nav">
+                        <div class="new-dot r"></div><div class="new-dot y"></div><div class="new-dot g"></div>
+                        <div class="new-url"></div>
+                    </div>
+                    <div class="new-body">
+                        <div class="new-hero">
+                            <div class="new-h"></div>
+                            <div class="new-sub"></div>
+                            <div class="new-sub s50"></div>
+                            <div class="new-btn-sm"></div>
+                        </div>
+                        <div class="new-cards">
+                            <div class="new-card"><div class="new-card-icon"></div><div class="new-card-h"></div><div class="new-card-sub"></div></div>
+                            <div class="new-card"><div class="new-card-icon"></div><div class="new-card-h"></div><div class="new-card-sub"></div></div>
+                            <div class="new-card"><div class="new-card-icon"></div><div class="new-card-h"></div><div class="new-card-sub"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="good-points">
+                    <div class="good-point"><span class="check-icon">✓</span> Design moderno e profissional</div>
+                    <div class="good-point"><span class="check-icon">✓</span> 100% responsivo (mobile-first)</div>
+                    <div class="good-point"><span class="check-icon">✓</span> Rápido, otimizado e seguro</div>
+                    <div class="good-point"><span class="check-icon">✓</span> Ganha mais clientes online</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="cta-strip">
+            <div class="cta-text">
+                <h3>Pronto para transformar o seu negócio?</h3>
+                <p>Contacte-nos hoje e obtenha um orçamento gratuito</p>
+            </div>
+            <div class="cta-btn">Falar Connosco →</div>
+        </div>
+
+        <div class="bottom-bar">
+            <div class="jv-logo">JV <span>Digital</span></div>
+            <div class="handle">@jvdigital.pt</div>
+        </div>
+    </div>
+</body>
+</html>

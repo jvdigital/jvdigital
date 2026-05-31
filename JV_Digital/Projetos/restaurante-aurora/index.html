@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante Aurora — Culinária Gourmet & Experiência Exclusiva</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <span class="logo-text">Aurora</span>
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="#inicio" class="nav-link active">Início</a></li>
+                    <li><a href="#sobre" class="nav-link">O Restaurante</a></li>
+                    <li><a href="#menu" class="nav-link">O Menu</a></li>
+                    <li><a href="#reservas" class="nav-link">Reservas</a></li>
+                    <li><a href="#contacto" class="nav-link">Contacto</a></li>
+                </ul>
+            </nav>
+
+            <a href="#reservas" class="btn btn-primary btn-nav">Reservar Mesa</a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-section" style="background-image: linear-gradient(rgba(17, 12, 8, 0.75), rgba(17, 12, 8, 0.9)), url('hero.png');">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <span class="hero-subtitle">Alta Gastronomia Italiana</span>
+                <h1 class="hero-title">Onde o sabor encontra a arte.</h1>
+                <p class="hero-description">Uma experiência gastronómica inesquecível, combinando ingredientes frescos e selecionados com a paixão pela culinária tradicional italiana num ambiente acolhedor e sofisticado.</p>
+                <div class="hero-actions">
+                    <a href="#menu" class="btn btn-secondary">Ver O Menu</a>
+                    <a href="#reservas" class="btn btn-primary">Reservar Mesa</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-badge">
+            <i class="fa-solid fa-award"></i>
+            <span>Recomendado 2026</span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre" class="section sobre-section">
+        <div class="container grid-2">
+            <div class="sobre-img-container">
+                <div class="sobre-img-wrapper">
+                    <!-- Since hero.png is a beautiful food photo, we can reuse it or use CSS styling as graphic frames -->
+                    <img src="hero.png" alt="Prato Gourmet Aurora" class="sobre-img">
+                </div>
+                <div class="sobre-experience-badge">
+                    <span class="years">15</span>
+                    <span class="text">Anos de<br>Tradição</span>
+                </div>
+            </div>
+            <div class="sobre-content">
+                <span class="section-tag">A Nossa Essência</span>
+                <h2 class="section-title">Paixão pela Cozinha e Atenção ao Detalhe</h2>
+                <p class="sobre-text">No Restaurante Aurora, cada prato é uma história contada através de sabores autênticos. Fundado na paixão familiar pelas receitas caseiras das várias regiões de Itália, procuramos trazer uma reinterpretação moderna de clássicos intemporais.</p>
+                <p class="sobre-text">Desde a massa fresca confecionada diariamente à mão até aos ingredientes de origem controlada importados diretamente de pequenos produtores italianos, garantimos que cada visita ao Aurora seja uma celebração.</p>
+                <div class="sobre-features">
+                    <div class="feature-item">
+                        <i class="fa-solid fa-leaf"></i>
+                        <span>Ingredientes Frescos & Orgânicos</span>
+                    </div>
+                    <div class="feature-item">
+                        <i class="fa-solid fa-wine-glass"></i>
+                        <span>Carta de Vinhos Selecionada</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section menu-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-tag">A Nossa Seleção</span>
+                <h2 class="section-title">Explore o Nosso Menu</h2>
+                <p class="section-description">Pratos desenhados pelo nosso Chef para despertar os seus sentidos.</p>
+            </div>
+
+            <!-- Menu Tabs -->
+            <div class="menu-tabs">
+                <button class="menu-tab-btn active" data-category="entradas">Entradas</button>
+                <button class="menu-tab-btn" data-category="principais">Pratos Principais</button>
+                <button class="menu-tab-btn" data-category="sobremesas">Sobremesas</button>
+                <button class="menu-tab-btn" data-category="bebidas">Bebidas & Vinhos</button>
+            </div>
+
+            <!-- Menu Items Grid -->
+            <div class="menu-grid" id="menuGrid">
+                
+                <!-- Category: Entradas -->
+                <div class="menu-item active" data-item-category="entradas">
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Bruschetta Clássica</h3>
+                            <span class="menu-item-price">8.50€</span>
+                        </div>
+                        <p class="menu-item-desc">Fatias de pão rústico torrado, esfregado com alho, tomates cereja marinados em azeite virgem extra e manjericão fresco.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item active" data-item-category="entradas">
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Carpaccio de Novilho</h3>
+                            <span class="menu-item-price">14.00€</span>
+                        </div>
+                        <p class="menu-item-desc">Lâminas finas de lombo de novilho, rúcula selvagem, lascas de queijo Grana Padano, alcaparras e emulsão de limão e mostarda.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item active" data-item-category="entradas">
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Burrata Caprese com Pesto</h3>
+                            <span class="menu-item-price">12.50€</span>
+                        </div>
+                        <p class="menu-item-desc">Queijo Burrata cremoso servido com tomates assados no forno, folhas de manjericão fresco, pinhões tostados e pesto caseiro.</p>
+                    </div>
+                </div>
+
+                <!-- Category: Principais -->
+                <div class="menu-item" data-item-category="principais">
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Tagliatelle com Trufa Preta</h3>
+                            <span class="menu-item-price">22.00€</span>
+                        </div>
+                        <p class="menu-item-desc">Massa fresca artesanal envolta num molho aveludado de manteiga de trufa, cogumelos porcini selvagens e trufa preta fresca ralada.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-item-category="principais">
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Risotto di Mare</h3>
+                            <span class="menu-item-price">24.50€</span>
+                        </div>
+                        <p class="menu-item-desc">Risotto cremoso de arroz Carnaroli cozinhado em caldo de marisco, guarnecido com camarões, ameijoas, lulas e mexilhões frescos.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-item-category="principais">
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Filetto di Manzo ao Barolo</h3>
+                            <span class="menu-item-price">26.00€</span>
+                        </div>
+                        <p class="menu-item-desc">Lombo de novilho grelhado no ponto com redução de vinho tinto Barolo, acompanhado por puré de batata trufado e legumes salteados.</p>
+                    </div>
+                </div>
+
+                <!-- Category: Sobremesas -->
+                <div class="menu-item" data-item-category="sobremesas">
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Tiramisù Clássico</h3>
+                            <span class="menu-item-price">6.50€</span>
+                        </div>
+                        <p class="menu-item-desc">Camadas de palitos La Reine embebidos em café expresso forte e licor Amaretto, cobertos por um creme suave de queijo Mascarpone e cacau em pó.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-item-category="sobremesas">
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Panna Cotta de Frutos Vermelhos</h3>
+                            <span class="menu-item-price">6.00€</span>
+                        </div>
+                        <p class="menu-item-desc">Panna cotta tradicional aromatizada com vagem de baunilha de Madagáscar, servida com uma coulis fresca de frutos vermelhos silvestres.</p>
+                    </div>
+                </div>
+
+                <!-- Category: Bebidas -->
+                <div class="menu-item" data-item-category="bebidas">
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Chianti Classico DOCG (Garrafa)</h3>
+                            <span class="menu-item-price">28.00€</span>
+                        </div>
+                        <p class="menu-item-desc">Vinho tinto seco de corpo médio da região da Toscana, com notas de cerejas maduras e especiarias terrestres.</p>
+                    </div>
+                </div>
+
+                <div class="menu-item" data-item-category="bebidas">
+                    <div class="menu-item-info">
+                        <div class="menu-item-header">
+                            <h3 class="menu-item-title">Limoncello Artesanal</h3>
+                            <span class="menu-item-price">4.50€</span>
+                        </div>
+                        <p class="menu-item-desc">Licor digestivo tradicional italiano feito a partir de cascas de limão da Costa Amalfitana. Servido bem gelado.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials / Reviews -->
+    <section class="section reviews-section">
+        <div class="container">
+            <div class="reviews-slider">
+                <div class="review-item text-center">
+                    <div class="stars">
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <blockquote class="review-text">"Uma experiência culinária extraordinária! A massa com trufas pretas estava absolutamente perfeita. O atendimento foi impecável e a atmosfera muito elegante. Voltaremos de certeza."</blockquote>
+                    <cite class="review-author">— Maria e André Santos</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reservation Section -->
+    <section id="reservas" class="section reserva-section">
+        <div class="container grid-2">
+            <div class="reserva-content">
+                <span class="section-tag">Reservas</span>
+                <h2 class="section-title">Reserve a Sua Mesa</h2>
+                <p class="reserva-desc">Recomendamos que efetue a sua reserva com antecedência para garantir o seu lugar. Para grupos com mais de 8 pessoas, por favor contacte-nos diretamente por telefone.</p>
+                <div class="reserva-info">
+                    <div class="info-block">
+                        <i class="fa-solid fa-phone"></i>
+                        <div>
+                            <h4>Telefone</h4>
+                            <p>+351 213 456 789</p>
+                        </div>
+                    </div>
+                    <div class="info-block">
+                        <i class="fa-solid fa-envelope"></i>
+                        <div>
+                            <h4>E-mail</h4>
+                            <p>reservas@restauranteaurora.pt</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="reserva-form-container">
+                <form id="reservaForm" class="reserva-form">
+                    <div class="form-group">
+                        <label for="res_name">Nome Completo</label>
+                        <input type="text" id="res_name" required placeholder="Ex: João Vicente">
+                    </div>
+                    <div class="form-group">
+                        <label for="res_email">E-mail</label>
+                        <input type="email" id="res_email" required placeholder="Ex: joao@email.com">
+                    </div>
+                    <div class="grid-2 form-row">
+                        <div class="form-group">
+                            <label for="res_phone">Telemóvel</label>
+                            <input type="tel" id="res_phone" required placeholder="Ex: 912 345 678">
+                        </div>
+                        <div class="form-group">
+                            <label for="res_guests">Pessoas</label>
+                            <select id="res_guests" required>
+                                <option value="2">2 Pessoas</option>
+                                <option value="3">3 Pessoas</option>
+                                <option value="4">4 Pessoas</option>
+                                <option value="5">5 Pessoas</option>
+                                <option value="6">6 Pessoas</option>
+                                <option value="7">7 Pessoas</option>
+                                <option value="8">8 Pessoas</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="grid-2 form-row">
+                        <div class="form-group">
+                            <label for="res_date">Data</label>
+                            <input type="date" id="res_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="res_time">Horário</label>
+                            <select id="res_time" required>
+                                <option value="12:30">12:30 (Almoço)</option>
+                                <option value="13:00">13:00 (Almoço)</option>
+                                <option value="13:30">13:30 (Almoço)</option>
+                                <option value="20:00">20:00 (Jantar)</option>
+                                <option value="20:30">20:30 (Jantar)</option>
+                                <option value="21:00">21:00 (Jantar)</option>
+                                <option value="21:30">21:30 (Jantar)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="res_notes">Observações (Opcional)</label>
+                        <textarea id="res_notes" rows="3" placeholder="Restrições alimentares, aniversário, mesa na janela, etc."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Confirmar Reserva</button>
+                </form>
+
+                <!-- Success Message Modal/Box -->
+                <div id="reservaSuccess" class="reserva-success-box hidden">
+                    <div class="success-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <h3>Reserva Solicitada!</h3>
+                    <p>Obrigado, <strong id="summaryName"></strong>. A sua solicitação de reserva para dia <strong id="summaryDate"></strong> às <strong id="summaryTime"></strong> (<span id="summaryGuests"></span> pessoas) foi recebida.</p>
+                    <p class="note">Irár receber um e-mail de confirmação em breve.</p>
+                    <button id="btnResetReserva" class="btn btn-secondary">Fazer Nova Reserva</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer & Contact -->
+    <footer id="contacto" class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <span class="footer-logo">Aurora</span>
+                <p>O melhor da culinária tradicional italiana num ambiente moderno e sofisticado em Portugal.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Tripadvisor"><i class="fa-brands fa-tripadvisor"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-hours">
+                <h3>Horário de Funcionamento</h3>
+                <ul>
+                    <li><span>Terça a Quinta</span> <span>12:00 – 15:00, 19:30 – 23:00</span></li>
+                    <li><span>Sexta e Sábado</span> <span>12:00 – 15:00, 19:30 – 00:00</span></li>
+                    <li><span>Domingo</span> <span>12:00 – 16:00</span></li>
+                    <li><span>Segunda-feira</span> <span class="closed">Encerrado</span></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h3>Onde Estamos</h3>
+                <p><i class="fa-solid fa-location-dot"></i> Avenida da Liberdade 125, 1250-140 Lisboa</p>
+                <p><i class="fa-solid fa-phone"></i> +351 213 456 789</p>
+                <p><i class="fa-solid fa-envelope"></i> info@restauranteaurora.pt</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Restaurante Aurora. Todos os direitos reservados.</p>
+                <p class="credits">Desenvolvido por <a href="../../Portfolio/index.html" class="portfolio-link">JV Digital</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

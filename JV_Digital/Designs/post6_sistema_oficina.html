@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080">
+    <title>Post 6 – JV Digital | Sistema Oficina</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { width: 1080px; height: 1080px; overflow: hidden; font-family: 'Outfit', sans-serif; }
+        .post {
+            width: 1080px; height: 1080px;
+            background: linear-gradient(145deg, #0a0f1a 0%, #0d1525 50%, #060d1a 100%);
+            position: relative; display: flex;
+            flex-direction: column; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Grid dots background */
+        .dot-bg {
+            position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(59,130,246,0.15) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+
+        /* Glows */
+        .glow-1 { position: absolute; width: 600px; height: 400px; background: radial-gradient(ellipse, rgba(59,130,246,0.18) 0%, transparent 70%); top: -50px; right: -100px; }
+        .glow-2 { position: absolute; width: 400px; height: 400px; background: radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%); bottom: -50px; left: 50px; }
+
+        /* Corner brackets */
+        .bracket { position: absolute; width: 40px; height: 40px; border-color: rgba(59,130,246,0.4); border-style: solid; }
+        .bracket.tl { top: 50px; left: 50px; border-width: 2px 0 0 2px; }
+        .bracket.tr { top: 50px; right: 50px; border-width: 2px 2px 0 0; }
+        .bracket.bl { bottom: 50px; left: 50px; border-width: 0 0 2px 2px; }
+        .bracket.br { bottom: 50px; right: 50px; border-width: 0 2px 2px 0; }
+
+        /* Badge */
+        .badge {
+            background: rgba(59,130,246,0.1);
+            border: 1px solid rgba(59,130,246,0.35);
+            color: #60a5fa;
+            font-size: 11px; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; padding: 7px 20px;
+            border-radius: 30px; margin-bottom: 24px;
+        }
+
+        /* Title */
+        .title { font-size: 54px; font-weight: 900; color: #fff; text-align: center; line-height: 1.05; margin-bottom: 6px; }
+        .title .blue { color: #3b82f6; }
+        .subtitle-main { color: rgba(255,255,255,0.4); font-size: 16px; text-align: center; margin-bottom: 36px; font-weight: 300; }
+
+        /* Dashboard mockup */
+        .dashboard-mock {
+            width: 900px;
+            background: rgba(15,23,42,0.9);
+            border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 40px rgba(59,130,246,0.1);
+        }
+
+        /* Topbar */
+        .mock-topbar {
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding: 10px 20px;
+            display: flex; align-items: center; gap: 16px;
+        }
+        .mock-logo { color: #3b82f6; font-size: 14px; font-weight: 800; letter-spacing: 1px; }
+        .mock-logo span { color: rgba(255,255,255,0.3); font-weight: 300; }
+        .mock-sep { flex: 1; }
+        .mock-date { color: rgba(255,255,255,0.3); font-size: 11px; font-family: 'JetBrains Mono', monospace; }
+        .mock-search {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 6px; width: 180px; height: 24px;
+        }
+
+        .mock-body { display: flex; }
+
+        /* Sidebar */
+        .mock-sidebar {
+            width: 140px; background: rgba(0,0,0,0.2);
+            border-right: 1px solid rgba(255,255,255,0.05);
+            padding: 12px 0; flex-shrink: 0;
+        }
+        .mock-nav-item {
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 14px; font-size: 10px;
+            color: rgba(255,255,255,0.35); cursor: pointer;
+        }
+        .mock-nav-item.active { background: rgba(59,130,246,0.15); color: #60a5fa; border-right: 2px solid #3b82f6; }
+        .mock-nav-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+
+        /* Content */
+        .mock-content { flex: 1; padding: 16px; }
+
+        /* Stat cards */
+        .mock-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 16px; }
+        .mock-stat { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 8px; padding: 10px 12px; }
+        .mock-stat-label { color: rgba(255,255,255,0.3); font-size: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .mock-stat-val { font-size: 26px; font-weight: 800; margin-top: 2px; font-family: 'JetBrains Mono', monospace; }
+        .mock-stat-val.cyan { color: #06b6d4; }
+        .mock-stat-val.yellow { color: #f59e0b; }
+        .mock-stat-val.green { color: #22c55e; }
+        .mock-stat-val.muted { color: rgba(255,255,255,0.3); }
+
+        /* Table */
+        .mock-table-wrap { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; overflow: hidden; }
+        .mock-table-header { display: grid; grid-template-columns: 1fr 1.5fr 1fr 0.8fr 0.8fr; padding: 8px 12px; background: rgba(255,255,255,0.03); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .mock-th { color: rgba(255,255,255,0.2); font-size: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .mock-row { display: grid; grid-template-columns: 1fr 1.5fr 1fr 0.8fr 0.8fr; padding: 9px 12px; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: center; }
+        .mock-row:last-child { border-bottom: none; }
+        .mock-plate { color: #3b82f6; font-size: 10px; font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+        .mock-car { color: rgba(255,255,255,0.7); font-size: 10px; font-weight: 600; }
+        .mock-owner { color: rgba(255,255,255,0.4); font-size: 9px; }
+        .mock-tech { color: rgba(255,255,255,0.4); font-size: 9px; }
+        .mock-pill { font-size: 8px; font-weight: 600; padding: 3px 8px; border-radius: 10px; letter-spacing: 0.5px; white-space: nowrap; }
+        .pill-diag { background: rgba(6,182,212,0.15); color: #06b6d4; border: 1px solid rgba(6,182,212,0.3); }
+        .pill-rep  { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+        .pill-ok   { background: rgba(34,197,94,0.15); color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+
+        /* Features strip below dashboard */
+        .features-strip {
+            display: flex; gap: 20px;
+            width: 900px; margin-top: 20px;
+        }
+        .feat-item {
+            flex: 1;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(59,130,246,0.15);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .feat-icon {
+            width: 40px; height: 40px; flex-shrink: 0;
+            background: rgba(59,130,246,0.12);
+            border: 1px solid rgba(59,130,246,0.25);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px;
+        }
+        .feat-label { color: rgba(255,255,255,0.8); font-size: 13px; font-weight: 600; }
+        .feat-desc { color: rgba(255,255,255,0.35); font-size: 11px; margin-top: 2px; }
+
+        /* Bottom bar */
+        .bottom-bar {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 58px;
+            background: rgba(0,0,0,0.7); border-top: 1px solid rgba(59,130,246,0.2);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 80px;
+        }
+        .logo { color: #3b82f6; font-size: 18px; font-weight: 800; letter-spacing: 2px; }
+        .logo span { color: rgba(255,255,255,0.3); font-weight: 300; }
+        .handle { color: rgba(255,255,255,0.3); font-size: 13px; }
+        .tagline { color: rgba(255,255,255,0.5); font-size: 13px; font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="post">
+        <div class="dot-bg"></div>
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+        <div class="bracket tl"></div>
+        <div class="bracket tr"></div>
+        <div class="bracket bl"></div>
+        <div class="bracket br"></div>
+
+        <div class="badge">🔧 Solução de Software · Para Oficinas</div>
+
+        <div class="title">Sistema de Gestão de <span class="blue">Oficina</span></div>
+        <div class="subtitle-main">Da entrada do veículo à entrega ao cliente — tudo numa plataforma</div>
+
+        <!-- Dashboard mockup -->
+        <div class="dashboard-mock">
+            <div class="mock-topbar">
+                <div class="mock-logo">Oficina<span>Pro</span></div>
+                <div class="mock-search"></div>
+                <div class="mock-sep"></div>
+                <div class="mock-date">31/05/2026</div>
+            </div>
+            <div class="mock-body">
+                <div class="mock-sidebar">
+                    <div class="mock-nav-item active"><div class="mock-nav-dot"></div>Dashboard</div>
+                    <div class="mock-nav-item"><div class="mock-nav-dot"></div>Nova Entrada</div>
+                    <div class="mock-nav-item"><div class="mock-nav-dot"></div>Fila de Trabalho</div>
+                    <div class="mock-nav-item"><div class="mock-nav-dot"></div>Histórico</div>
+                </div>
+                <div class="mock-content">
+                    <div class="mock-stats">
+                        <div class="mock-stat"><div class="mock-stat-label">Em Diagnóstico</div><div class="mock-stat-val cyan">3</div></div>
+                        <div class="mock-stat"><div class="mock-stat-label">Em Reparação</div><div class="mock-stat-val yellow">5</div></div>
+                        <div class="mock-stat"><div class="mock-stat-label">Pronto p/ Entrega</div><div class="mock-stat-val green">2</div></div>
+                        <div class="mock-stat"><div class="mock-stat-label">Total Entregues</div><div class="mock-stat-val muted">41</div></div>
+                    </div>
+                    <div class="mock-table-wrap">
+                        <div class="mock-table-header">
+                            <div class="mock-th">Matrícula</div>
+                            <div class="mock-th">Viatura</div>
+                            <div class="mock-th">Proprietário</div>
+                            <div class="mock-th">Técnico</div>
+                            <div class="mock-th">Estado</div>
+                        </div>
+                        <div class="mock-row">
+                            <div class="mock-plate">45-DF-92</div>
+                            <div class="mock-car">Audi A3 · 2015</div>
+                            <div class="mock-owner">Carlos Oliveira</div>
+                            <div class="mock-tech">Vasco Costa</div>
+                            <div><span class="mock-pill pill-rep">Em Reparação</span></div>
+                        </div>
+                        <div class="mock-row">
+                            <div class="mock-plate">AA-78-AA</div>
+                            <div class="mock-car">BMW 320d · 2012</div>
+                            <div class="mock-owner">Ana Santos</div>
+                            <div class="mock-tech">Daniel Mota</div>
+                            <div><span class="mock-pill pill-diag">Em Diagnóstico</span></div>
+                        </div>
+                        <div class="mock-row">
+                            <div class="mock-plate">92-ZS-12</div>
+                            <div class="mock-car">Renault Clio · 2017</div>
+                            <div class="mock-owner">Miguel Sousa</div>
+                            <div class="mock-tech">Afonso Silva</div>
+                            <div><span class="mock-pill pill-ok">Pronto</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="features-strip">
+            <div class="feat-item">
+                <div class="feat-icon">🚗</div>
+                <div><div class="feat-label">Entrada de Veículos</div><div class="feat-desc">Registo completo do cliente e viatura</div></div>
+            </div>
+            <div class="feat-item">
+                <div class="feat-icon">🔧</div>
+                <div><div class="feat-label">Gestão de Reparações</div><div class="feat-desc">Peças, mão-de-obra e diagnóstico</div></div>
+            </div>
+            <div class="feat-item">
+                <div class="feat-icon">🧾</div>
+                <div><div class="feat-label">Fatura Automática</div><div class="feat-desc">Gera e imprime faturas com IVA</div></div>
+            </div>
+            <div class="feat-item">
+                <div class="feat-icon">📦</div>
+                <div><div class="feat-label">Dados Locais</div><div class="feat-desc">Sem internet · Sem mensalidade</div></div>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <div class="logo">JV <span>Digital</span></div>
+            <div class="tagline">Software feito à medida do seu negócio</div>
+            <div class="handle">@jvdigital.pt</div>
+        </div>
+    </div>
+</body>
+</html>

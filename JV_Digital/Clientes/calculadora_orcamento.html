@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Orçamento — JV Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #080c14; --surface: #111827; --surface2: #1a2332;
+            --border: rgba(255,255,255,0.07); --primary: #3b82f6;
+            --primary-glow: rgba(59,130,246,0.2); --green: #22c55e;
+            --amber: #f59e0b; --text: #f1f5f9; --muted: rgba(241,245,249,0.45);
+            --font: 'Outfit', sans-serif;
+        }
+        body {
+            font-family: var(--font); background: var(--bg); color: var(--text);
+            min-height: 100vh; display: flex; flex-direction: column;
+        }
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: radial-gradient(rgba(59,130,246,0.06) 1px, transparent 1px);
+            background-size: 44px 44px; pointer-events: none;
+        }
+
+        /* Top bar */
+        .topbar {
+            background: rgba(10,15,26,0.9);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            padding: 14px 40px;
+            display: flex; align-items: center; justify-content: space-between;
+            position: sticky; top: 0; z-index: 100;
+        }
+        .topbar-logo { font-size: 20px; font-weight: 900; letter-spacing: -0.5px; }
+        .topbar-logo span { color: var(--primary); }
+        .topbar-back {
+            display: flex; align-items: center; gap: 8px;
+            color: var(--muted); font-size: 14px; text-decoration: none;
+            transition: color 0.2s;
+        }
+        .topbar-back:hover { color: var(--text); }
+
+        .page-main {
+            flex: 1; display: grid; grid-template-columns: 1fr 380px;
+            gap: 0; max-width: 1100px; width: 100%; margin: 0 auto;
+            padding: 40px 24px; gap: 32px; position: relative; z-index: 1;
+        }
+
+        /* Left — configurator */
+        .configurator { display: flex; flex-direction: column; gap: 24px; }
+
+        .config-header { margin-bottom: 8px; }
+        .config-header h1 { font-size: 36px; font-weight: 900; line-height: 1.1; letter-spacing: -1px; }
+        .config-header h1 .accent { color: var(--primary); }
+        .config-header p { color: var(--muted); font-size: 15px; margin-top: 10px; line-height: 1.6; }
+
+        /* Section card */
+        .config-section {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .config-section-header {
+            padding: 18px 22px;
+            background: rgba(255,255,255,0.02);
+            border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; gap: 12px;
+        }
+        .config-section-header .icon {
+            width: 32px; height: 32px;
+            background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            font-size: 15px;
+        }
+        .config-section-header h3 { font-size: 15px; font-weight: 700; }
+        .config-section-header p { font-size: 12px; color: var(--muted); margin-top: 1px; }
+
+        .config-section-body { padding: 6px 0; }
+
+        /* Option row */
+        .option-row {
+            display: flex; align-items: center; gap: 16px;
+            padding: 14px 22px;
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .option-row:last-child { border-bottom: none; }
+        .option-row:hover { background: rgba(255,255,255,0.03); }
+        .option-row.selected { background: rgba(59,130,246,0.08); }
+        .option-row.selected .opt-check {
+            background: var(--primary); border-color: var(--primary);
+            color: #fff;
+        }
+
+        .opt-check {
+            width: 22px; height: 22px; border-radius: 50%;
+            border: 2px solid rgba(255,255,255,0.15);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 11px; color: transparent;
+            flex-shrink: 0; transition: all 0.2s;
+        }
+        .option-row.multi .opt-check { border-radius: 6px; }
+
+        .opt-body { flex: 1; }
+        .opt-name { font-size: 15px; font-weight: 600; }
+        .opt-desc { font-size: 12px; color: var(--muted); margin-top: 2px; }
+        .opt-badge {
+            font-size: 10px; font-weight: 700; letter-spacing: 1px;
+            padding: 2px 8px; border-radius: 10px;
+            text-transform: uppercase; margin-left: 8px;
+        }
+        .opt-badge.popular { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); color: var(--amber); }
+        .opt-badge.free { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.25); color: var(--green); }
+
+        .opt-price { font-size: 16px; font-weight: 800; color: var(--primary); white-space: nowrap; }
+        .opt-price.included { font-size: 13px; color: var(--green); font-weight: 600; }
+
+        /* Number input row */
+        .number-row {
+            display: flex; align-items: center; gap: 12px;
+            padding: 14px 22px; border-bottom: 1px solid rgba(255,255,255,0.04);
+        }
+        .number-row:last-child { border-bottom: none; }
+        .number-row .opt-body { flex: 1; }
+        .number-stepper {
+            display: flex; align-items: center; gap: 10px;
+        }
+        .stepper-btn {
+            width: 28px; height: 28px; border-radius: 8px;
+            background: rgba(255,255,255,0.07); border: 1px solid var(--border);
+            color: var(--text); font-size: 16px; font-weight: 700;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s;
+        }
+        .stepper-btn:hover { background: rgba(59,130,246,0.2); }
+        .stepper-val { font-size: 18px; font-weight: 800; min-width: 24px; text-align: center; }
+
+        /* Right — Quote summary */
+        .quote-panel {
+            position: sticky; top: 86px; height: fit-content;
+            display: flex; flex-direction: column; gap: 16px;
+        }
+
+        .quote-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; overflow: hidden;
+        }
+
+        .quote-header {
+            background: linear-gradient(135deg, #0f172a, #1e293b);
+            padding: 22px 24px;
+            border-bottom: 1px solid rgba(59,130,246,0.2);
+        }
+        .quote-header .label { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; }
+        .quote-header .total-big {
+            font-size: 48px; font-weight: 900; color: var(--primary);
+            letter-spacing: -2px; margin: 6px 0 0;
+            transition: all 0.3s ease;
+        }
+        .quote-header .total-sub { font-size: 13px; color: var(--muted); }
+
+        .quote-items { padding: 16px; display: flex; flex-direction: column; gap: 6px; }
+        .quote-item {
+            display: flex; justify-content: space-between; align-items: flex-start;
+            padding: 8px 10px; border-radius: 8px;
+            background: rgba(255,255,255,0.03);
+            font-size: 13px;
+        }
+        .quote-item .q-name { color: var(--text); font-weight: 500; }
+        .quote-item .q-price { color: var(--primary); font-weight: 700; white-space: nowrap; margin-left: 8px; }
+        .quote-item .q-price.free { color: var(--green); font-size: 12px; }
+        .quote-empty { color: var(--muted); font-size: 13px; text-align: center; padding: 20px; font-style: italic; }
+
+        .quote-divider { height: 1px; background: var(--border); margin: 4px 0; }
+
+        .quote-totals { padding: 0 16px 16px; }
+        .q-total-row {
+            display: flex; justify-content: space-between;
+            font-size: 13px; color: var(--muted); padding: 5px 0;
+        }
+        .q-total-row.main { color: var(--text); font-size: 18px; font-weight: 800; padding-top: 10px; border-top: 1px solid var(--border); margin-top: 4px; }
+        .q-total-row.main .right { color: var(--primary); }
+
+        .quote-actions { padding: 0 16px 16px; display: flex; flex-direction: column; gap: 10px; }
+        .btn-generate {
+            width: 100%; padding: 15px; border-radius: 12px;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: #fff; font-family: var(--font); font-size: 15px; font-weight: 700;
+            border: none; cursor: pointer; letter-spacing: 0.5px;
+            transition: opacity 0.2s;
+        }
+        .btn-generate:hover { opacity: 0.9; }
+        .btn-copy {
+            width: 100%; padding: 13px; border-radius: 12px;
+            background: transparent; border: 1px solid var(--border);
+            color: var(--muted); font-family: var(--font); font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+        }
+        .btn-copy:hover { border-color: rgba(59,130,246,0.4); color: var(--text); }
+
+        /* Delivery estimate */
+        .delivery-card {
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 16px; padding: 18px 20px;
+        }
+        .delivery-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+        .delivery-bar {
+            background: rgba(255,255,255,0.06); border-radius: 8px;
+            height: 8px; overflow: hidden; margin-bottom: 6px;
+        }
+        .delivery-fill {
+            height: 100%; background: linear-gradient(90deg, var(--primary), #818cf8);
+            border-radius: 8px; transition: width 0.5s ease;
+        }
+        .delivery-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+
+        /* Toast */
+        .toast {
+            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #1e293b; border: 1px solid rgba(34,197,94,0.4);
+            color: var(--green); padding: 12px 24px; border-radius: 12px;
+            font-size: 14px; font-weight: 600; z-index: 999;
+            display: flex; align-items: center; gap: 10px;
+            opacity: 0; transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; }
+    </style>
+</head>
+<body>
+
+    <!-- Top bar -->
+    <div class="topbar">
+        <div class="topbar-logo"><span>JV</span>Digital</div>
+        <a href="../index.html" class="topbar-back"><i class="fa-solid fa-arrow-left"></i> Voltar ao Hub</a>
+    </div>
+
+    <div class="page-main">
+        <!-- LEFT: Configurator -->
+        <div class="configurator">
+            <div class="config-header">
+                <h1>Calculadora de<br><span class="accent">Orçamento</span></h1>
+                <p>Selecione as funcionalidades que pretende para o seu projeto. O preço é calculado automaticamente em tempo real.</p>
+            </div>
+
+            <!-- Package base -->
+            <div class="config-section">
+                <div class="config-section-header">
+                    <div class="icon">📦</div>
+                    <div>
+                        <h3>Pacote Base</h3>
+                        <p>Escolha o ponto de partida do seu projeto (apenas um)</p>
+                    </div>
+                </div>
+                <div class="config-section-body" id="packageGroup">
+                    <div class="option-row selected" data-group="package" data-id="basic" data-price="250" data-name="Website Básico (1–3 páginas)">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">Website Básico <span class="opt-badge popular">Mais Vendido</span></div>
+                            <div class="opt-desc">1 a 3 páginas — ideal para apresentar um negócio local simples</div>
+                        </div>
+                        <div class="opt-price">250€</div>
+                    </div>
+                    <div class="option-row" data-group="package" data-id="standard" data-price="400" data-name="Website Standard (até 5 páginas)">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">Website Standard</div>
+                            <div class="opt-desc">Até 5 páginas com galeria, serviços e contacto completo</div>
+                        </div>
+                        <div class="opt-price">400€</div>
+                    </div>
+                    <div class="option-row" data-group="package" data-id="premium" data-price="600" data-name="Website Premium (página única scroll)">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">Website Premium</div>
+                            <div class="opt-desc">Design avançado, animações, scroll suave e identidade visual completa</div>
+                        </div>
+                        <div class="opt-price">600€</div>
+                    </div>
+                    <div class="option-row" data-group="package" data-id="system" data-price="900" data-name="Sistema Web Personalizado">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">Sistema Web</div>
+                            <div class="opt-desc">Aplicação com base de dados local (tipo OficinaPro) para gestão interna</div>
+                        </div>
+                        <div class="opt-price">900€</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add-ons -->
+            <div class="config-section">
+                <div class="config-section-header">
+                    <div class="icon">➕</div>
+                    <div>
+                        <h3>Extras e Funcionalidades</h3>
+                        <p>Adicione funcionalidades específicas ao projeto (seleção múltipla)</p>
+                    </div>
+                </div>
+                <div class="config-section-body" id="addonsGroup">
+                    <div class="option-row multi" data-id="booking" data-price="80" data-name="Sistema de Marcação/Reservas Online">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">Sistema de Marcações Online</div>
+                            <div class="opt-desc">Widget de agendamento onde o cliente escolhe serviço, data e hora</div>
+                        </div>
+                        <div class="opt-price">+80€</div>
+                    </div>
+                    <div class="option-row multi" data-id="menu" data-price="60" data-name="Menu Digital Interativo">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">Menu Digital Interativo</div>
+                            <div class="opt-desc">Ideal para restaurantes — menu por categorias, filtrável, com preços</div>
+                        </div>
+                        <div class="opt-price">+60€</div>
+                    </div>
+                    <div class="option-row multi" data-id="gallery" data-price="40" data-name="Galeria de Trabalhos com Lightbox">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">Galeria com Lightbox</div>
+                            <div class="opt-desc">Galeria de fotos/trabalhos com zoom e navegação suave</div>
+                        </div>
+                        <div class="opt-price">+40€</div>
+                    </div>
+                    <div class="option-row multi" data-id="whatsapp" data-price="0" data-name="Botão WhatsApp flutuante">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">Botão WhatsApp Flutuante <span class="opt-badge free">Grátis</span></div>
+                            <div class="opt-desc">Botão de contacto direto via WhatsApp sempre visível na página</div>
+                        </div>
+                        <div class="opt-price included">Grátis</div>
+                    </div>
+                    <div class="option-row multi" data-id="multilang" data-price="120" data-name="Versão Multilingue (PT + EN)">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">Versão Multilingue</div>
+                            <div class="opt-desc">Site em Português e Inglês — ideal para zonas turísticas</div>
+                        </div>
+                        <div class="opt-price">+120€</div>
+                    </div>
+                    <div class="option-row multi" data-id="seo" data-price="50" data-name="SEO Avançado + Google Business">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">SEO Avançado + Google Business</div>
+                            <div class="opt-desc">Configuração completa de SEO local e ficha Google My Business</div>
+                        </div>
+                        <div class="opt-price">+50€</div>
+                    </div>
+                    <div class="option-row multi" data-id="analytics" data-price="0" data-name="Google Analytics integrado">
+                        <div class="opt-check"><i class="fa-solid fa-check"></i></div>
+                        <div class="opt-body">
+                            <div class="opt-name">Google Analytics <span class="opt-badge free">Grátis</span></div>
+                            <div class="opt-desc">Monitorização de visitas, cliques e comportamento dos utilizadores</div>
+                        </div>
+                        <div class="opt-price included">Grátis</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pages extra -->
+            <div class="config-section">
+                <div class="config-section-header">
+                    <div class="icon">📄</div>
+                    <div>
+                        <h3>Páginas Adicionais</h3>
+                        <p>Cada página extra para além do pacote</p>
+                    </div>
+                </div>
+                <div class="config-section-body">
+                    <div class="number-row">
+                        <div class="opt-body">
+                            <div class="opt-name">Páginas Adicionais</div>
+                            <div class="opt-desc">Cada página extra — ex: Blog, Equipa, FAQ, Política de Privacidade...</div>
+                        </div>
+                        <div class="opt-price" style="margin-right: 16px;">30€ / pág.</div>
+                        <div class="number-stepper">
+                            <button class="stepper-btn" id="pagesDown">−</button>
+                            <div class="stepper-val" id="pagesVal">0</div>
+                            <button class="stepper-btn" id="pagesUp">+</button>
+                        </div>
+                    </div>
+                    <div class="number-row">
+                        <div class="opt-body">
+                            <div class="opt-name">Meses de Suporte Pós-Entrega</div>
+                            <div class="opt-desc">Atualizações, textos, imagens e pequenos ajustes por mês</div>
+                        </div>
+                        <div class="opt-price" style="margin-right: 16px;">25€ / mês</div>
+                        <div class="number-stepper">
+                            <button class="stepper-btn" id="supportDown">−</button>
+                            <div class="stepper-val" id="supportVal">0</div>
+                            <button class="stepper-btn" id="supportUp">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- RIGHT: Quote panel -->
+        <div class="quote-panel">
+            <div class="quote-card">
+                <div class="quote-header">
+                    <div class="label">Orçamento Estimado</div>
+                    <div class="total-big" id="totalDisplay">250€</div>
+                    <div class="total-sub">valor total estimado (sem IVA)</div>
+                </div>
+                <div class="quote-items" id="quoteItems">
+                    <div class="quote-item">
+                        <span class="q-name">Website Básico (1–3 páginas)</span>
+                        <span class="q-price">250€</span>
+                    </div>
+                </div>
+                <div class="quote-totals">
+                    <div class="quote-divider"></div>
+                    <div class="q-total-row"><span>Subtotal (sem IVA)</span><span id="subtotalDisp">250€</span></div>
+                    <div class="q-total-row"><span>IVA (23%)</span><span id="ivaDisp">57,50€</span></div>
+                    <div class="q-total-row main"><span>Total com IVA</span><span class="right" id="totalWithVat">307,50€</span></div>
+                    <div class="q-total-row" style="margin-top: 8px; font-size: 12px;">
+                        <span style="color: var(--amber);">💡 50% entrada + 50% entrega</span>
+                        <span id="halfDisplay" style="color: var(--amber); font-weight: 700;">125€ + 125€</span>
+                    </div>
+                </div>
+                <div class="quote-actions">
+                    <button class="btn-generate" onclick="generateSummary()">
+                        <i class="fa-solid fa-file-lines"></i> Gerar Resumo Completo
+                    </button>
+                    <button class="btn-copy" onclick="copyQuote()">
+                        <i class="fa-regular fa-copy"></i> Copiar orçamento para clipboard
+                    </button>
+                </div>
+            </div>
+
+            <div class="delivery-card">
+                <h4><i class="fa-solid fa-clock" style="color: var(--primary); margin-right: 8px;"></i>Prazo Estimado</h4>
+                <div class="delivery-bar"><div class="delivery-fill" id="deliveryFill" style="width: 30%;"></div></div>
+                <div class="delivery-meta">
+                    <span>Início</span>
+                    <span id="deliveryDays" style="color: var(--text); font-weight: 700;">7–10 dias</span>
+                    <span>Entrega</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary modal -->
+    <div id="summaryModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:200; align-items:center; justify-content:center; padding:20px;">
+        <div style="background:#111827; border:1px solid rgba(59,130,246,0.3); border-radius:20px; max-width:560px; width:100%; max-height:80vh; overflow-y:auto; padding:36px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:24px;">
+                <h2 style="font-size:22px; font-weight:800;">Resumo do Orçamento</h2>
+                <button onclick="closeModal()" style="background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); color:#fff; border-radius:8px; padding:6px 14px; cursor:pointer; font-family:var(--font); font-size:13px;">✕ Fechar</button>
+            </div>
+            <div id="summaryContent" style="font-size:14px; line-height:1.8; color:rgba(241,245,249,0.8); white-space:pre-wrap;"></div>
+            <button onclick="copyQuote(); closeModal();" style="margin-top:24px; width:100%; padding:14px; background:#3b82f6; border:none; border-radius:10px; color:#fff; font-family:var(--font); font-size:15px; font-weight:700; cursor:pointer;">
+                <i class="fa-regular fa-copy"></i> Copiar para Clipboard
+            </button>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast"><i class="fa-solid fa-clipboard-check"></i> Copiado para a área de transferência!</div>
+
+    <script>
+        // State
+        let selectedPackage = { id: 'basic', name: 'Website Básico (1–3 páginas)', price: 250 };
+        let selectedAddons = [];
+        let extraPages = 0;
+        let supportMonths = 0;
+
+        // Package selection (radio)
+        document.querySelectorAll('#packageGroup .option-row').forEach(row => {
+            row.addEventListener('click', () => {
+                document.querySelectorAll('#packageGroup .option-row').forEach(r => r.classList.remove('selected'));
+                row.classList.add('selected');
+                selectedPackage = {
+                    id: row.dataset.id,
+                    name: row.dataset.name,
+                    price: parseInt(row.dataset.price)
+                };
+                updateQuote();
+            });
+        });
+
+        // Addons (checkbox multi)
+        document.querySelectorAll('#addonsGroup .option-row').forEach(row => {
+            row.addEventListener('click', () => {
+                row.classList.toggle('selected');
+                const addonData = { id: row.dataset.id, name: row.dataset.name, price: parseInt(row.dataset.price) };
+                if (row.classList.contains('selected')) {
+                    selectedAddons.push(addonData);
+                } else {
+                    selectedAddons = selectedAddons.filter(a => a.id !== addonData.id);
+                }
+                updateQuote();
+            });
+        });
+
+        // Steppers
+        document.getElementById('pagesUp').addEventListener('click', () => { extraPages = Math.min(extraPages + 1, 10); document.getElementById('pagesVal').textContent = extraPages; updateQuote(); });
+        document.getElementById('pagesDown').addEventListener('click', () => { extraPages = Math.max(extraPages - 1, 0); document.getElementById('pagesVal').textContent = extraPages; updateQuote(); });
+        document.getElementById('supportUp').addEventListener('click', () => { supportMonths = Math.min(supportMonths + 1, 12); document.getElementById('supportVal').textContent = supportMonths; updateQuote(); });
+        document.getElementById('supportDown').addEventListener('click', () => { supportMonths = Math.max(supportMonths - 1, 0); document.getElementById('supportVal').textContent = supportMonths; updateQuote(); });
+
+        function updateQuote() {
+            // Calculate total
+            let total = selectedPackage.price;
+            selectedAddons.forEach(a => total += a.price);
+            total += extraPages * 30;
+            total += supportMonths * 25;
+
+            // Update big number
+            document.getElementById('totalDisplay').textContent = `${total}€`;
+            document.getElementById('subtotalDisp').textContent = `${total}€`;
+            const iva = total * 0.23;
+            document.getElementById('ivaDisp').textContent = `${iva.toFixed(2)}€`;
+            document.getElementById('totalWithVat').textContent = `${(total + iva).toFixed(2)}€`;
+            document.getElementById('halfDisplay').textContent = `${(total/2).toFixed(0)}€ + ${(total/2).toFixed(0)}€`;
+
+            // Render items
+            const container = document.getElementById('quoteItems');
+            container.innerHTML = '';
+
+            // Package
+            addQuoteItem(container, selectedPackage.name, selectedPackage.price);
+
+            // Addons
+            selectedAddons.forEach(a => {
+                addQuoteItem(container, a.name, a.price);
+            });
+
+            // Pages
+            if (extraPages > 0) addQuoteItem(container, `${extraPages} Página(s) Extra`, extraPages * 30);
+            if (supportMonths > 0) addQuoteItem(container, `Suporte ${supportMonths} mês(es)`, supportMonths * 25);
+
+            // Delivery estimate
+            let days = 7;
+            if (selectedPackage.id === 'standard') days = 10;
+            if (selectedPackage.id === 'premium') days = 14;
+            if (selectedPackage.id === 'system') days = 21;
+            days += selectedAddons.length * 2 + extraPages * 1;
+            const daysEnd = days + 3;
+            document.getElementById('deliveryDays').textContent = `${days}–${daysEnd} dias`;
+            const pct = Math.min((days / 25) * 100, 95);
+            document.getElementById('deliveryFill').style.width = `${pct}%`;
+        }
+
+        function addQuoteItem(container, name, price) {
+            const div = document.createElement('div');
+            div.className = 'quote-item';
+            div.innerHTML = `<span class="q-name">${name}</span><span class="q-price ${price === 0 ? 'free' : ''}">${price === 0 ? 'Grátis' : price + '€'}</span>`;
+            container.appendChild(div);
+        }
+
+        function buildSummaryText() {
+            let total = selectedPackage.price;
+            selectedAddons.forEach(a => total += a.price);
+            total += extraPages * 30;
+            total += supportMonths * 25;
+            const iva = total * 0.23;
+            const today = new Date();
+            const dateStr = `${String(today.getDate()).padStart(2,'0')}/${String(today.getMonth()+1).padStart(2,'0')}/${today.getFullYear()}`;
+
+            let txt = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            txt += `  ORÇAMENTO JV DIGITAL — ${dateStr}\n`;
+            txt += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            txt += `📦 PACOTE BASE:\n  ✓ ${selectedPackage.name} — ${selectedPackage.price}€\n\n`;
+
+            if (selectedAddons.length > 0) {
+                txt += `➕ EXTRAS SELECIONADOS:\n`;
+                selectedAddons.forEach(a => {
+                    txt += `  ${a.price === 0 ? '🎁' : '✓'} ${a.name} — ${a.price === 0 ? 'Grátis' : a.price + '€'}\n`;
+                });
+                txt += '\n';
+            }
+
+            if (extraPages > 0) txt += `📄 Páginas Adicionais (${extraPages}x): ${extraPages * 30}€\n`;
+            if (supportMonths > 0) txt += `🛠 Suporte Pós-Entrega (${supportMonths} mês): ${supportMonths * 25}€\n`;
+            if (extraPages > 0 || supportMonths > 0) txt += '\n';
+
+            txt += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+            txt += `  Subtotal (sem IVA): ${total}€\n`;
+            txt += `  IVA (23%): ${iva.toFixed(2)}€\n`;
+            txt += `  TOTAL COM IVA: ${(total + iva).toFixed(2)}€\n\n`;
+            txt += `  💡 Pagamento: ${(total/2).toFixed(0)}€ início + ${(total/2).toFixed(0)}€ entrega\n`;
+            txt += `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            txt += `📞 Contacto: geral@jvdigital.pt | +351 912 345 678\n`;
+            txt += `📱 Instagram: @jvdigital.pt\n`;
+            txt += `⚠️  Este orçamento é estimado e válido por 15 dias.`;
+            return txt;
+        }
+
+        function generateSummary() {
+            document.getElementById('summaryContent').textContent = buildSummaryText();
+            document.getElementById('summaryModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('summaryModal').style.display = 'none';
+        }
+
+        function copyQuote() {
+            navigator.clipboard.writeText(buildSummaryText()).then(() => {
+                const t = document.getElementById('toast');
+                t.classList.add('show');
+                setTimeout(() => t.classList.remove('show'), 2500);
+            });
+        }
+
+        // Init
+        updateQuote();
+    </script>
+</body>
+</html>

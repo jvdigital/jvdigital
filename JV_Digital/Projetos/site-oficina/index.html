@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoClínica — Serviços Mecânicos de Confiança</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Topbar/Navbar -->
+    <header class="navbar">
+        <div class="container navbar-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-car-burst"></i> Auto<span>Clínica</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#servicos">Serviços</a>
+                <a href="#calculadora">Calculadora</a>
+                <a href="#agendamento" class="btn btn-primary">Marcar Visita</a>
+                <a href="../../index.html" class="hub-back"><i class="fa-solid fa-arrow-left"></i> Hub</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="container hero-container">
+            <div class="hero-text">
+                <span class="badge"><i class="fa-solid fa-screwdriver-wrench"></i> Oficina Multimarcas</span>
+                <h1>O seu carro nas mãos de quem realmente percebe.</h1>
+                <p>Equipa qualificada, diagnósticos precisos por computador e preços transparentes. Faça a sua estimativa e marque online em menos de 1 minuto.</p>
+                <div class="hero-actions">
+                    <a href="#calculadora" class="btn btn-primary btn-glow">Simular Orçamento</a>
+                    <a href="#servicos" class="btn btn-secondary">Conhecer Serviços</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="visual-card">
+                    <div class="visual-header">
+                        <span class="dot red"></span>
+                        <span class="dot yellow"></span>
+                        <span class="dot green"></span>
+                        <span class="title">AutoClínica Diagnóstico</span>
+                    </div>
+                    <div class="visual-body">
+                        <div class="diag-line"><span>Matrícula:</span> <strong style="color: var(--primary);">OF-AUTO-26</strong></div>
+                        <div class="diag-line"><span>Diagnóstico Geral:</span> <strong style="color: var(--green);">OK</strong></div>
+                        <div class="diag-line"><span>Revisão Recomendada:</span> <strong>Simples</strong></div>
+                        <div class="progress-ring-wrap">
+                            <i class="fa-solid fa-gauge-high speed-icon"></i>
+                            <div class="running-text">Pressão Combustão Estável</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicos" class="services">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Os Nossos Serviços</h2>
+                <p>Soluções profissionais para garantir a sua segurança e o bom desempenho da sua viatura na estrada.</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="icon-wrap"><i class="fa-solid fa-gears"></i></div>
+                    <h3>Mecânica Geral</h3>
+                    <p>Substituição de correias de distribuição, kit de embraiagem, amortecedores e reparação completa de motores.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-wrap"><i class="fa-solid fa-temperature-arrow-down"></i></div>
+                    <h3>Climatização</h3>
+                    <p>Diagnóstico de fugas de ar condicionado, recarga de gás (R134a / R1234yf) e higienização do habitáculo.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-wrap"><i class="fa-solid fa-magnifying-glass-chart"></i></div>
+                    <h3>Diagnóstico OBD</h3>
+                    <p>Leitura de erros da centralina por computador para resolver luzes avisadoras no painel de instrumentos.</p>
+                </div>
+                <div class="service-card">
+                    <div class="icon-wrap"><i class="fa-solid fa-circle-notch"></i></div>
+                    <h3>Travagem & Pneus</h3>
+                    <p>Substituição de pastilhas, discos de travão, pneus novos das melhores marcas e alinhamento de direção 3D.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Calculator Section -->
+    <section id="calculadora" class="calc-section">
+        <div class="container">
+            <div class="calc-layout">
+                <div class="calc-form">
+                    <h2>Calculadora de Revisão</h2>
+                    <p style="color: var(--muted); margin-bottom: 24px;">Selecione os dados do seu veículo e o tipo de serviço para obter uma estimativa de preço instantânea.</p>
+                    
+                    <div class="form-group">
+                        <label>Cilindrada do Motor</label>
+                        <div class="radio-grid">
+                            <label class="radio-card selected">
+                                <input type="radio" name="engine" value="low" checked>
+                                <span>Até 1400 cc<small>Ex: Clio, C3, Polo</small></span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="engine" value="mid">
+                                <span>1401 cc a 2000 cc<small>Ex: A4, BMW 320, Golf</small></span>
+                            </label>
+                            <label class="radio-card">
+                                <input type="radio" name="engine" value="high">
+                                <span>Superior a 2000 cc<small>Ex: E320, SUV, Jeep</small></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tipo de Revisão</label>
+                        <div class="radio-grid vertical">
+                            <label class="radio-card-row selected">
+                                <input type="radio" name="service" value="simple" checked>
+                                <div class="row-info">
+                                    <strong>Revisão Simples (Óleo + Filtro Óleo)</strong>
+                                    <span>Troca de óleo sintético de alta qualidade e filtro. Verificação de 15 pontos de segurança.</span>
+                                </div>
+                                <span class="badge-price">+45€</span>
+                            </label>
+                            <label class="radio-card-row">
+                                <input type="radio" name="service" value="medium">
+                                <div class="row-info">
+                                    <strong>Revisão Intermédia (Óleo + 3 Filtros)</strong>
+                                    <span>Troca de óleo, filtro de óleo, filtro de ar e habitáculo. Níveis de fluidos.</span>
+                                </div>
+                                <span class="badge-price">+85€</span>
+                            </label>
+                            <label class="radio-card-row">
+                                <input type="radio" name="service" value="full">
+                                <div class="row-info">
+                                    <strong>Revisão Completa (Manutenção Geral)</strong>
+                                    <span>Todos os filtros (óleo, ar, habitáculo, combustível), troca de óleo e pastilhas de travão frontais.</span>
+                                </div>
+                                <span class="badge-price">+160€</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="calc-preview">
+                    <div class="preview-card">
+                        <span class="label">Orçamento Estimado</span>
+                        <div class="price" id="calcPrice">0,00€</div>
+                        <div class="desc">Inclui mão-de-obra e peças padrão. Valor sem IVA.</div>
+                        <div class="divider"></div>
+                        <div class="preview-item">
+                            <span>Motor selecionado:</span>
+                            <span id="previewEngine" style="font-weight: 600;">Até 1400 cc</span>
+                        </div>
+                        <div class="preview-item">
+                            <span>Tipo de serviço:</span>
+                            <span id="previewService" style="font-weight: 600;">Revisão Simples</span>
+                        </div>
+                        <div class="preview-item main-vat">
+                            <span>Total com IVA (23%):</span>
+                            <strong id="calcPriceVat">0,00€</strong>
+                        </div>
+                        <a href="#agendamento" class="btn btn-primary btn-block text-center" onclick="prepareBookingFromCalc()">Marcar Este Serviço</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="agendamento" class="booking">
+        <div class="container">
+            <div class="booking-wrapper">
+                <div class="booking-text">
+                    <h2>Marque a sua Revisão Online</h2>
+                    <p>Escolha o dia e hora que melhor se adaptam à sua rotina. Nós tratamos do resto e ligamos-lhe para confirmar todos os detalhes.</p>
+                    <div class="contact-bullets">
+                        <div class="bullet">
+                            <i class="fa-solid fa-phone"></i>
+                            <div>
+                                <h4>Contacto Telefónico</h4>
+                                <p>+351 210 987 654 (Chamada para rede fixa nacional)</p>
+                            </div>
+                        </div>
+                        <div class="bullet">
+                            <i class="fa-solid fa-location-dot"></i>
+                            <div>
+                                <h4>Localização</h4>
+                                <p>Zona Industrial das Oliveiras, Pavilhão 4, Lisboa</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="booking-form-wrap">
+                    <form id="bookingForm" class="booking-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="client_name">Nome Completo</label>
+                                <input type="text" id="client_name" required placeholder="Ex: António Moreira">
+                            </div>
+                            <div class="form-group">
+                                <label for="client_phone">Telemóvel</label>
+                                <input type="tel" id="client_phone" required placeholder="Ex: 963 258 147">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="car_plate">Matrícula da Viatura</label>
+                                <input type="text" id="car_plate" required placeholder="Ex: 00-AA-00" style="text-transform: uppercase;">
+                            </div>
+                            <div class="form-group">
+                                <label for="service_selected">Serviço Pretendido</label>
+                                <select id="service_selected">
+                                    <option value="Revisão Simples">Revisão Simples</option>
+                                    <option value="Revisão Intermédia">Revisão Intermédia</option>
+                                    <option value="Revisão Completa">Revisão Completa</option>
+                                    <option value="Diagnóstico OBD">Diagnóstico OBD / Luz Motor</option>
+                                    <option value="Mudança de Travões">Mudança de Pastilhas / Discos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="booking_date">Data Desejada</label>
+                                <input type="date" id="booking_date" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="booking_time">Hora</label>
+                                <select id="booking_time">
+                                    <option value="09:00">09:00</option>
+                                    <option value="11:00">11:00</option>
+                                    <option value="14:00">14:00</option>
+                                    <option value="16:00">16:00</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block text-center"><i class="fa-regular fa-calendar-check"></i> Submeter Agendamento</button>
+                    </form>
+                    
+                    <!-- Success Box -->
+                    <div id="bookingSuccess" class="success-box hidden">
+                        <i class="fa-solid fa-circle-check success-icon"></i>
+                        <h3>Pedido Enviado com Sucesso!</h3>
+                        <p>Obrigado pelo seu agendamento, <strong id="resName"></strong>.</p>
+                        <p>Marcámos o serviço <strong id="resService"></strong> para a viatura <strong id="resPlate"></strong> no dia <strong id="resDate"></strong> às <strong id="resTime"></strong>.</p>
+                        <p class="note">Entraremos em contacto em breve para confirmar a receção do veículo.</p>
+                        <button type="button" class="btn btn-secondary" onclick="resetBookingForm()">Marcar Novo Serviço</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="brand">
+                <i class="fa-solid fa-car-burst"></i> Auto<span>Clínica</span>
+            </div>
+            <p>&copy; 2026 AutoClínica — Projeto de Portfólio JV Digital</p>
+            <a href="../../index.html" class="btn btn-secondary btn-small"><i class="fa-solid fa-arrow-left"></i> Voltar ao Hub Central</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

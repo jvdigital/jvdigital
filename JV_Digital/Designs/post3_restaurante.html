@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1080">
+    <title>Post 3 – JV Digital | Restaurante</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { width: 1080px; height: 1080px; overflow: hidden; font-family: 'Outfit', sans-serif; }
+        .post {
+            width: 1080px; height: 1080px;
+            background: linear-gradient(145deg, #0e0a06 0%, #1a0f07 40%, #0d0a04 100%);
+            position: relative;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Atmospheric glow */
+        .glow-1 { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(210,120,30,0.25) 0%, transparent 70%); top: -100px; left: -100px; }
+        .glow-2 { position: absolute; width: 600px; height: 400px; background: radial-gradient(circle, rgba(180,80,20,0.15) 0%, transparent 70%); bottom: 0; right: -150px; }
+        .glow-3 { position: absolute; width: 300px; height: 300px; background: radial-gradient(circle, rgba(255,200,80,0.08) 0%, transparent 70%); top: 300px; left: 200px; }
+
+        /* Decorative lines */
+        .line-h { position: absolute; height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(210,150,50,0.3), transparent); top: 70px; }
+        .line-h2 { position: absolute; height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(210,150,50,0.3), transparent); bottom: 70px; }
+        .line-v { position: absolute; width: 1px; height: 100%; background: linear-gradient(180deg, transparent, rgba(210,150,50,0.3), transparent); left: 70px; }
+        .line-v2 { position: absolute; width: 1px; height: 100%; background: linear-gradient(180deg, transparent, rgba(210,150,50,0.3), transparent); right: 70px; }
+
+        /* Top label */
+        .top-label {
+            position: absolute;
+            top: 100px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .agency-badge {
+            background: rgba(210,120,30,0.15);
+            border: 1px solid rgba(210,120,30,0.4);
+            color: #e8a050;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 30px;
+        }
+
+        /* Phone mockup */
+        .phone-wrapper {
+            position: absolute;
+            right: 120px;
+            top: 50%;
+            transform: translateY(-50%) rotate(3deg);
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7)) drop-shadow(0 0 30px rgba(210,120,30,0.3));
+        }
+        .phone {
+            width: 220px;
+            background: #111;
+            border-radius: 30px;
+            border: 3px solid #333;
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+        }
+        .phone-notch {
+            width: 80px; height: 22px;
+            background: #111;
+            border-radius: 0 0 14px 14px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        .phone-screen {
+            background: #1a0f07;
+            height: 380px;
+            overflow: hidden;
+            position: relative;
+        }
+        .phone-hero {
+            width: 100%; height: 160px;
+            background: linear-gradient(135deg, #3d1a05, #6b3010);
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            padding: 12px;
+        }
+        .phone-hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+        }
+        .phone-hero-food {
+            position: absolute;
+            top: 0; right: 0; bottom: 0; left: 0;
+            background: radial-gradient(ellipse at 60% 40%, #8b4a1a 0%, #3d1a05 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 60px;
+        }
+        .phone-restaurant-name {
+            position: relative;
+            z-index: 2;
+            color: #f5c878;
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            font-weight: 700;
+        }
+        .phone-nav {
+            display: flex;
+            justify-content: space-around;
+            padding: 8px 10px;
+            background: rgba(255,255,255,0.03);
+            border-bottom: 1px solid rgba(210,120,30,0.2);
+        }
+        .phone-nav span { color: #e8a050; font-size: 9px; font-weight: 600; letter-spacing: 1px; }
+        .phone-nav span.active { color: #fff; border-bottom: 1px solid #e8a050; padding-bottom: 2px; }
+        .phone-content { padding: 12px 10px; }
+        .phone-section-title { color: #f5c878; font-family: 'Playfair Display', serif; font-size: 13px; margin-bottom: 8px; }
+        .phone-menu-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .phone-menu-item .dish { color: #ddd; font-size: 9px; font-weight: 500; }
+        .phone-menu-item .price { color: #e8a050; font-size: 10px; font-weight: 700; }
+        .phone-badge { background: rgba(210,120,30,0.2); border: 1px solid rgba(210,120,30,0.3); color: #e8a050; font-size: 7px; padding: 2px 6px; border-radius: 10px; margin-top: 4px; display: inline-block; }
+        .phone-cta { margin-top: 12px; background: linear-gradient(90deg, #c96b1a, #e8a050); border-radius: 8px; padding: 8px; text-align: center; color: #fff; font-size: 9px; font-weight: 700; letter-spacing: 1px; }
+
+        /* Left text content */
+        .content {
+            position: absolute;
+            left: 110px;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 480px;
+        }
+        .category-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(210,120,30,0.12);
+            border: 1px solid rgba(210,120,30,0.35);
+            color: #e8a050;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 30px;
+            margin-bottom: 28px;
+        }
+        .category-tag::before { content: '🍽️'; font-size: 14px; }
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 8px;
+        }
+        .main-title .accent { color: #e8a050; }
+        .subtitle {
+            font-size: 20px;
+            color: rgba(255,255,255,0.7);
+            line-height: 1.5;
+            margin-bottom: 36px;
+            font-weight: 300;
+        }
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 40px;
+        }
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .feature-icon {
+            width: 38px; height: 38px;
+            background: rgba(210,120,30,0.15);
+            border: 1px solid rgba(210,120,30,0.3);
+            border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .feature-text { color: rgba(255,255,255,0.8); font-size: 16px; font-weight: 400; }
+        .cta-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #c96b1a, #e8a050);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 16px 36px;
+            border-radius: 14px;
+            text-transform: uppercase;
+        }
+
+        /* Bottom bar */
+        .bottom-bar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60px;
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid rgba(210,150,50,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 100px;
+        }
+        .jv-logo { color: #e8a050; font-size: 18px; font-weight: 700; letter-spacing: 2px; }
+        .jv-logo span { color: rgba(255,255,255,0.5); font-weight: 300; }
+        .handle { color: rgba(255,255,255,0.4); font-size: 13px; }
+        .price-tag { color: rgba(255,255,255,0.6); font-size: 13px; }
+        .price-tag strong { color: #e8a050; font-size: 17px; }
+    </style>
+</head>
+<body>
+    <div class="post">
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+        <div class="glow-3"></div>
+        <div class="line-h"></div>
+        <div class="line-h2"></div>
+        <div class="line-v"></div>
+        <div class="line-v2"></div>
+
+        <div class="top-label">
+            <div class="agency-badge">JV Digital · Portfólio</div>
+        </div>
+
+        <!-- Left Content -->
+        <div class="content">
+            <div class="category-tag">Restaurante &amp; Gastronomia</div>
+            <div class="main-title">Websites para <span class="accent">Restaurantes</span></div>
+            <p class="subtitle">Atraia mais reservas com um site elegante que mostra o melhor do seu espaço e menu.</p>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">📋</div>
+                    <div class="feature-text">Menu digital completo e interativo</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📅</div>
+                    <div class="feature-text">Sistema de reservas online</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <div class="feature-text">100% adaptado a telemóvel</div>
+                </div>
+            </div>
+            <div class="cta-btn">Ver Projeto →</div>
+        </div>
+
+        <!-- Phone mockup -->
+        <div class="phone-wrapper">
+            <div class="phone">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <div class="phone-hero">
+                        <div class="phone-hero-food">🍝</div>
+                        <div class="phone-hero-overlay"></div>
+                        <div class="phone-restaurant-name">Restaurante Aurora</div>
+                    </div>
+                    <div class="phone-nav">
+                        <span class="active">Início</span>
+                        <span>Menu</span>
+                        <span>Reserva</span>
+                        <span>Sobre</span>
+                    </div>
+                    <div class="phone-content">
+                        <div class="phone-section-title">Menu do Dia</div>
+                        <div class="phone-menu-item">
+                            <div><div class="dish">Tagliatelle Trufado</div><div class="phone-badge">Chef's Special</div></div>
+                            <div class="price">18.50€</div>
+                        </div>
+                        <div class="phone-menu-item">
+                            <div><div class="dish">Risotto de Cogumelos</div></div>
+                            <div class="price">15.90€</div>
+                        </div>
+                        <div class="phone-menu-item">
+                            <div><div class="dish">Bacalhau à Brás Premium</div></div>
+                            <div class="price">16.50€</div>
+                        </div>
+                        <div class="phone-cta">RESERVAR MESA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bottom-bar">
+            <div class="jv-logo">JV <span>Digital</span></div>
+            <div class="handle">@jvdigital.pt</div>
+            <div class="price-tag">A partir de <strong>350€</strong></div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Prime — Cortes Clássicos & Barbearia Moderna</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header class="main-header">
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <span class="logo-text">Prime</span>
+            </a>
+            
+            <nav class="nav-menu" id="navMenu">
+                <ul>
+                    <li><a href="#inicio" class="nav-link active">Início</a></li>
+                    <li><a href="#sobre" class="nav-link">A Barbearia</a></li>
+                    <li><a href="#servicos" class="nav-link">Serviços</a></li>
+                    <li><a href="#equipa" class="nav-link">Equipa</a></li>
+                    <li><a href="#marcacao" class="nav-link">Marcações</a></li>
+                </ul>
+            </nav>
+
+            <a href="#marcacao" class="btn btn-primary btn-nav">Agendar Agora</a>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir Menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="inicio" class="hero-section" style="background-image: linear-gradient(rgba(14, 15, 17, 0.7), rgba(14, 15, 17, 0.9)), url('hero.png');">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <span class="hero-subtitle">Estilo & Atitude</span>
+                <h1 class="hero-title">Mais do que um corte. Um ritual.</h1>
+                <p class="hero-description">Cabelo alinhado, barba bem feita e uma cerveja artesanal fria. Combinamos técnicas tradicionais de navalha com as últimas tendências do design masculino.</p>
+                <div class="hero-actions">
+                    <a href="#servicos" class="btn btn-secondary">Preçário</a>
+                    <a href="#marcacao" class="btn btn-primary">Agendar Serviço</a>
+                </div>
+            </div>
+        </div>
+        <div class="hero-badge">
+            <i class="fa-solid fa-beer-mug-empty"></i>
+            <span>Bebida de Boas-Vindas Grátis</span>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="sobre" class="section sobre-section">
+        <div class="container grid-2">
+            <div class="sobre-img-container">
+                <div class="sobre-img-wrapper">
+                    <img src="hero.png" alt="Barbearia Prime Interior" class="sobre-img">
+                </div>
+            </div>
+            <div class="sobre-content">
+                <span class="section-tag">A Barbearia</span>
+                <h2 class="section-title">O Espaço Ideal para o Homem Moderno</h2>
+                <p class="sobre-text">A Barbearia Prime nasceu da vontade de criar um refúgio para o público masculino em [Cidade]. O nosso espaço foi planeado com uma estética industrial e retro, onde cada cliente recebe um atendimento totalmente personalizado.</p>
+                <p class="sobre-text">Mais do que ir ao barbeiro, oferecemos uma experiência de descontração completa: toalhas quentes, massagem capilar e profissionais dedicados à excelência de cada corte e barba.</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>+5000</h3>
+                        <p>Cortes Feitos</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>3</h3>
+                        <p>Barbeiros Elite</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>99%</h3>
+                        <p>Feedback Positivo</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services / Pricing Section -->
+    <section id="servicos" class="section servicos-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-tag">O que fazemos</span>
+                <h2 class="section-title">Serviços & Preços</h2>
+                <p class="section-description">Valores transparentes e foco na máxima qualidade dos serviços prestados.</p>
+            </div>
+
+            <div class="services-grid">
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-scissors"></i>
+                    </div>
+                    <h3>Corte Clássico</h3>
+                    <span class="price">15.00€</span>
+                    <p>Lavagem, corte à tesoura e máquina, secagem e finalização com pomada premium.</p>
+                    <span class="duration"><i class="fa-regular fa-clock"></i> 30 min</span>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-razor"></i>
+                    </div>
+                    <h3>Barba Tradicional</h3>
+                    <span class="price">10.00€</span>
+                    <p>Barba desenhada com navalha, toalha quente aromática, óleo hidratante e massagem facial.</p>
+                    <span class="duration"><i class="fa-regular fa-clock"></i> 25 min</span>
+                </div>
+
+                <div class="service-card featured">
+                    <div class="badge">Mais Procurado</div>
+                    <div class="service-icon">
+                        <i class="fa-solid fa-crown"></i>
+                    </div>
+                    <h3>Combo Prime</h3>
+                    <span class="price">22.00€</span>
+                    <p>O ritual completo. Corte de cabelo premium + barba tradicional com toalha quente + cerveja fria.</p>
+                    <span class="duration"><i class="fa-regular fa-clock"></i> 55 min</span>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fa-solid fa-broom"></i>
+                    </div>
+                    <h3>Corte & Cor (Cabelo)</h3>
+                    <span class="price">25.00€</span>
+                    <p>Corte de cabelo e disfarce de cabelos brancos ou descoloração parcial.</p>
+                    <span class="duration"><i class="fa-regular fa-clock"></i> 60 min</span>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section id="equipa" class="section equipa-section">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-tag">Os Especialistas</span>
+                <h2 class="section-title">Nossa Equipa</h2>
+                <p class="section-description">Trabalhamos apenas com profissionais experientes e apaixonados pelo estilo masculino.</p>
+            </div>
+
+            <div class="team-grid">
+                
+                <div class="team-card">
+                    <div class="team-img-wrapper">
+                        <div class="team-img-placeholder"><i class="fa-solid fa-user-tie"></i></div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Afonso Silva</h3>
+                        <p class="role">Fundador & Barbeiro Sénior</p>
+                        <p class="specialty">Especialista em Cortes Clássicos e Degradê</p>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-img-wrapper">
+                        <div class="team-img-placeholder"><i class="fa-solid fa-user-astronaut"></i></div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Vasco Costa</h3>
+                        <p class="role">Barbeiro Estilista</p>
+                        <p class="specialty">Especialista em Barbas de Navalha e Hair Design</p>
+                    </div>
+                </div>
+
+                <div class="team-card">
+                    <div class="team-img-wrapper">
+                        <div class="team-img-placeholder"><i class="fa-solid fa-user-ninja"></i></div>
+                    </div>
+                    <div class="team-info">
+                        <h3>Daniel Mota</h3>
+                        <p class="role">Barbeiro Estilo Livre</p>
+                        <p class="specialty">Especialista em Cortes Modernos e Pinturas</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Booking Section -->
+    <section id="marcacao" class="section marcacao-section">
+        <div class="container">
+            <div class="booking-wrapper">
+                <div class="booking-left">
+                    <span class="section-tag">Agendamento</span>
+                    <h2 class="section-title">Agende em 1 Minuto</h2>
+                    <p class="booking-desc">Escolha os serviços desejados, o seu barbeiro favorito e o melhor horário. É simples e rápido!</p>
+                    
+                    <div class="booking-steps-info">
+                        <div class="step-info"><span class="step-num">1</span> Selecione o Serviço</div>
+                        <div class="step-info"><span class="step-num">2</span> Escolha o Barbeiro</div>
+                        <div class="step-info"><span class="step-num">3</span> Escolha Data e Hora</div>
+                    </div>
+                </div>
+
+                <div class="booking-right">
+                    <form id="bookingForm" class="booking-form">
+                        
+                        <!-- Step 1: Services Selection -->
+                        <div class="booking-step-content" id="step1">
+                            <h3>Escolha os Serviços:</h3>
+                            <div class="services-select-list">
+                                <label class="service-select-item">
+                                    <input type="checkbox" name="services" value="Corte Clássico" data-price="15.00">
+                                    <div class="select-details">
+                                        <span class="select-name">Corte Clássico</span>
+                                        <span class="select-price">15.00€</span>
+                                    </div>
+                                </label>
+                                <label class="service-select-item">
+                                    <input type="checkbox" name="services" value="Barba Tradicional" data-price="10.00">
+                                    <div class="select-details">
+                                        <span class="select-name">Barba Tradicional</span>
+                                        <span class="select-price">10.00€</span>
+                                    </div>
+                                </label>
+                                <label class="service-select-item">
+                                    <input type="checkbox" name="services" value="Combo Prime" data-price="22.00">
+                                    <div class="select-details">
+                                        <span class="select-name">Combo Prime (Corte + Barba)</span>
+                                        <span class="select-price">22.00€</span>
+                                    </div>
+                                </label>
+                                <label class="service-select-item">
+                                    <input type="checkbox" name="services" value="Corte & Cor" data-price="25.00">
+                                    <div class="select-details">
+                                        <span class="select-name">Corte & Cor</span>
+                                        <span class="select-price">25.00€</span>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Barber & DateTime Selection -->
+                        <div class="booking-step-content" id="step2">
+                            <div class="form-group">
+                                <label for="book_barber">Escolha o Barbeiro:</label>
+                                <select id="book_barber" required>
+                                    <option value="Qualquer Profissional">Primeiro Barbeiro Disponível</option>
+                                    <option value="Afonso Silva">Afonso Silva (Sénior)</option>
+                                    <option value="Vasco Costa">Vasco Costa (Barba)</option>
+                                    <option value="Daniel Mota">Daniel Mota (Cortes Modernos)</option>
+                                </select>
+                            </div>
+                            
+                            <div class="grid-2 form-row" style="gap: 15px;">
+                                <div class="form-group">
+                                    <label for="book_date">Data:</label>
+                                    <input type="date" id="book_date" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="book_time">Horário:</label>
+                                    <select id="book_time" required>
+                                        <option value="09:00">09:00</option>
+                                        <option value="10:00">10:00</option>
+                                        <option value="11:00">11:00</option>
+                                        <option value="12:00">12:00</option>
+                                        <option value="14:00">14:00</option>
+                                        <option value="15:00">15:00</option>
+                                        <option value="16:00">16:00</option>
+                                        <option value="17:00">17:00</option>
+                                        <option value="18:00">18:00</option>
+                                        <option value="19:00">19:00</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="book_name">Seu Nome:</label>
+                                <input type="text" id="book_name" required placeholder="Ex: João Vicente">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="book_phone">Seu Telemóvel:</label>
+                                <input type="tel" id="book_phone" required placeholder="Ex: 912 345 678">
+                            </div>
+                        </div>
+
+                        <!-- Real-time price calculator -->
+                        <div class="price-summary">
+                            <span>Total Estimado:</span>
+                            <span class="total-price" id="totalPrice">0.00€</span>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-block" id="btnSubmitBooking" disabled>Confirmar Agendamento</button>
+                    </form>
+
+                    <!-- Success Widget Screen -->
+                    <div id="bookingSuccess" class="booking-success-box hidden">
+                        <div class="success-icon"><i class="fa-solid fa-circle-check"></i></div>
+                        <h3>Agendado com Sucesso!</h3>
+                        <div class="success-summary">
+                            <p><strong>Cliente:</strong> <span id="sumName"></span></p>
+                            <p><strong>Serviço(s):</strong> <span id="sumServices"></span></p>
+                            <p><strong>Barbeiro:</strong> <span id="sumBarber"></span></p>
+                            <p><strong>Data:</strong> <span id="sumDate"></span> às <span id="sumTime"></span></p>
+                            <p class="final-price"><strong>Preço:</strong> <span id="sumPrice"></span></p>
+                        </div>
+                        <p class="notice">Enviámos uma mensagem SMS de confirmação.</p>
+                        <button id="btnResetBooking" class="btn btn-secondary btn-block">Agendar Outro Serviço</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container footer-grid">
+            <div class="footer-about">
+                <span class="footer-logo">Prime</span>
+                <p>O teu clube de estilo clássico com técnicas modernas de corte de cabelo e tratamento de barba.</p>
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-hours">
+                <h3>Horários</h3>
+                <ul>
+                    <li><span>Segunda a Sexta</span> <span>09:00 – 20:00</span></li>
+                    <li><span>Sábado</span> <span>09:00 – 18:00</span></li>
+                    <li><span>Domingo</span> <span class="closed">Encerrado</span></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h3>Localização</h3>
+                <p><i class="fa-solid fa-location-dot"></i> Rua D. João IV, 45, Porto, Portugal</p>
+                <p><i class="fa-solid fa-phone"></i> +351 229 876 543</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container footer-bottom-container">
+                <p>&copy; 2026 Barbearia Prime. Todos os direitos reservados.</p>
+                <p class="credits">Desenvolvido por <a href="../../Portfolio/index.html">JV Digital</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

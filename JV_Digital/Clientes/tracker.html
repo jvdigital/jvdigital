@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JV Digital — Painel de Controlo de Prospeção (Leads Tracker)</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="tracker.css">
+</head>
+<body>
+
+    <header class="tracker-header">
+        <div class="container header-flex">
+            <div>
+                <span class="brand">JV Digital</span>
+                <h1>Painel de Prospeção de Negócios</h1>
+            </div>
+            <div class="actions">
+                <a href="../index.html" class="btn btn-secondary"><i class="fa-solid fa-arrow-left"></i> Voltar ao Hub</a>
+                <a href="leads.csv" download class="btn btn-secondary"><i class="fa-solid fa-file-excel"></i> Descarregar Excel (CSV)</a>
+                <a href="../Portfolio/index.html" class="btn btn-primary"><i class="fa-solid fa-house"></i> Ir para Portfólio</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="tracker-content container">
+        
+        <!-- Summary Dashboard Cards -->
+        <section class="summary-cards">
+            <div class="card bg-blue">
+                <div class="card-info">
+                    <span class="title">Total de Leads</span>
+                    <span class="value" id="statTotal">30</span>
+                </div>
+                <div class="card-icon"><i class="fa-solid fa-users"></i></div>
+            </div>
+
+            <div class="card bg-yellow">
+                <div class="card-info">
+                    <span class="title">A Contactar</span>
+                    <span class="value" id="statTodo">30</span>
+                </div>
+                <div class="card-icon"><i class="fa-solid fa-paper-plane"></i></div>
+            </div>
+
+            <div class="card bg-purple">
+                <div class="card-info">
+                    <span class="title">Contactados</span>
+                    <span class="value" id="statContacted">0</span>
+                </div>
+                <div class="card-icon"><i class="fa-solid fa-clock"></i></div>
+            </div>
+
+            <div class="card bg-green">
+                <div class="card-info">
+                    <span class="title">Respostas / Ganho</span>
+                    <span class="value" id="statWon">0</span>
+                </div>
+                <div class="card-icon"><i class="fa-solid fa-circle-check"></i></div>
+            </div>
+        </section>
+
+        <!-- Filters Section -->
+        <section class="filters-panel">
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" id="searchInput" placeholder="Pesquisar por nome de negócio...">
+            </div>
+            
+            <div class="select-filters">
+                <div class="filter-group">
+                    <label for="filterSector">Setor</label>
+                    <select id="filterSector">
+                        <option value="all">Todos os Setores</option>
+                        <option value="Restaurante">Restaurante</option>
+                        <option value="Barbearia">Barbearia</option>
+                        <option value="Oficina">Oficina</option>
+                        <option value="Café">Café / Pastelaria</option>
+                        <option value="Estética">Estética / Clínica</option>
+                        <option value="Ginásio">Ginásio</option>
+                        <option value="Loja">Lojas / Outros</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterCity">Cidade</label>
+                    <select id="filterCity">
+                        <option value="all">Todas as Cidades</option>
+                        <!-- Cities will be populated dynamically -->
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="filterStatus">Estado</label>
+                    <select id="filterStatus">
+                        <option value="all">Todos os Estados</option>
+                        <option value="A contactar">A contactar</option>
+                        <option value="Contactado">Contactado</option>
+                        <option value="Respondeu">Respondeu</option>
+                        <option value="Rejeitado">Rejeitado</option>
+                        <option value="Fechado (Ganho)">Fechado (Ganho)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <!-- Leads Table -->
+        <section class="leads-list-wrapper">
+            <div class="table-container">
+                <table class="leads-table">
+                    <thead>
+                        <tr>
+                            <th>Negócio</th>
+                            <th>Área</th>
+                            <th>Cidade</th>
+                            <th>Instagram</th>
+                            <th>Problema Detetado</th>
+                            <th>Estado</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadsTableBody">
+                        <!-- Loaded dynamically -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="noResults" class="no-results hidden">
+                <i class="fa-solid fa-filter-circle-xmark"></i>
+                <p>Nenhum negócio encontrado com os filtros selecionados.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Outreach Script Copy Toast / Overlay -->
+    <div id="copyToast" class="toast hidden">
+        <i class="fa-solid fa-clipboard-check"></i>
+        <span>Mensagem copiada para a área de transferência!</span>
+    </div>
+
+    <!-- Script overlay detailed preview modal -->
+    <div id="scriptModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Guião de Abordagem Personalizado</h2>
+                <button class="close-btn" id="btnCloseModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p class="modal-meta">Mensagem para: <strong id="modalBusinessName"></strong></p>
+                <div class="script-text-box">
+                    <pre id="modalScriptContent"></pre>
+                </div>
+                <div class="modal-actions">
+                    <button class="btn btn-primary" id="btnCopyScriptModal"><i class="fa-solid fa-copy"></i> Copiar Mensagem</button>
+                    <button class="btn btn-secondary" id="btnCancelModal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="tracker.js"></script>
+</body>
+</html>

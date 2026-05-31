@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OficinaPro — Sistema de Gestão de Reparações</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- App Container -->
+    <div class="app-layout">
+        
+        <!-- Sidebar Navigation -->
+        <aside class="app-sidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-screwdriver-wrench"></i>
+                <h2>Oficina<span>Pro</span></h2>
+            </div>
+            
+            <nav class="sidebar-menu">
+                <ul>
+                    <li class="menu-item active" data-tab="dashboard">
+                        <i class="fa-solid fa-chart-pie"></i> <span>Dashboard</span>
+                    </li>
+                    <li class="menu-item" data-tab="entrada">
+                        <i class="fa-solid fa-circle-plus"></i> <span>Nova Entrada</span>
+                    </li>
+                    <li class="menu-item" data-tab="trabalho">
+                        <i class="fa-solid fa-table-list"></i> <span>Fila de Trabalho</span>
+                    </li>
+                    <li class="menu-item" data-tab="historico">
+                        <i class="fa-solid fa-clock-rotate-left"></i> <span>Histórico</span>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <span class="user-role"><i class="fa-solid fa-user-shield"></i> Administrador</span>
+                <a href="../../Portfolio/index.html" class="back-portfolio-btn"><i class="fa-solid fa-arrow-left"></i> Portfólio</a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="app-workspace">
+            
+            <!-- Topbar -->
+            <header class="app-topbar">
+                <div class="topbar-search">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="globalSearchInput" placeholder="Pesquisar por matrícula ou proprietário...">
+                </div>
+                <div class="topbar-date">
+                    <i class="fa-regular fa-calendar"></i>
+                    <span id="currentDateDisplay">--/--/----</span>
+                </div>
+            </header>
+
+            <!-- Tab Content: Dashboard -->
+            <section class="tab-content active" id="tab-dashboard">
+                <div class="workspace-header">
+                    <h1>Painel Geral</h1>
+                    <p>Visão geral do estado das reparações e veículos ativos.</p>
+                </div>
+
+                <!-- Stats Summary -->
+                <div class="stats-grid">
+                    <div class="stat-card border-cyan">
+                        <div class="stat-info">
+                            <span class="label">Em Diagnóstico</span>
+                            <span class="value" id="stat-diagnostico">0</span>
+                        </div>
+                        <div class="stat-icon text-cyan"><i class="fa-solid fa-magnifying-glass"></i></div>
+                    </div>
+                    
+                    <div class="stat-card border-yellow">
+                        <div class="stat-info">
+                            <span class="label">Em Reparação</span>
+                            <span class="value" id="stat-reparacao">0</span>
+                        </div>
+                        <div class="stat-icon text-yellow"><i class="fa-solid fa-gears"></i></div>
+                    </div>
+
+                    <div class="stat-card border-green">
+                        <div class="stat-info">
+                            <span class="label">Pronto para Entrega</span>
+                            <span class="value" id="stat-pronto">0</span>
+                        </div>
+                        <div class="stat-icon text-green"><i class="fa-solid fa-circle-check"></i></div>
+                    </div>
+
+                    <div class="stat-card border-muted">
+                        <div class="stat-info">
+                            <span class="label">Total Entregues</span>
+                            <span class="value" id="stat-entregue">0</span>
+                        </div>
+                        <div class="stat-icon text-muted"><i class="fa-solid fa-truck-ramp-box"></i></div>
+                    </div>
+                </div>
+
+                <!-- Main dashboard content -->
+                <div class="dashboard-details grid-2">
+                    <!-- Left: Recent Vehicles list -->
+                    <div class="detail-box">
+                        <h3><i class="fa-solid fa-clock"></i> Entradas Recentes</h3>
+                        <div class="recent-list-container">
+                            <table class="recent-table">
+                                <thead>
+                                    <tr>
+                                        <th>Matrícula</th>
+                                        <th>Viatura</th>
+                                        <th>Estado</th>
+                                        <th>Data</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentVehiclesBody">
+                                    <!-- Populated by JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Right: Quick actions and technician loads -->
+                    <div class="detail-box">
+                        <h3><i class="fa-solid fa-toolbox"></i> Distribuição de Trabalho</h3>
+                        <div class="tech-load-container">
+                            <div class="tech-load-item">
+                                <div class="tech-info">
+                                    <span class="name">Afonso Silva (Sénior)</span>
+                                    <span class="count" id="load-afonso">0 viaturas</span>
+                                </div>
+                                <div class="progress-bar"><div class="progress" id="load-bar-afonso" style="width: 0%"></div></div>
+                            </div>
+                            <div class="tech-load-item">
+                                <div class="tech-info">
+                                    <span class="name">Vasco Costa (Mecânico)</span>
+                                    <span class="count" id="load-vasco">0 viaturas</span>
+                                </div>
+                                <div class="progress-bar"><div class="progress" id="load-bar-vasco" style="width: 0%"></div></div>
+                            </div>
+                            <div class="tech-load-item">
+                                <div class="tech-info">
+                                    <span class="name">Daniel Mota (Eletricista)</span>
+                                    <span class="count" id="load-daniel">0 viaturas</span>
+                                </div>
+                                <div class="progress-bar"><div class="progress" id="load-bar-daniel" style="width: 0%"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab Content: Entrada de Veículo -->
+            <section class="tab-content" id="tab-entrada">
+                <div class="workspace-header">
+                    <h1>Registo de Entrada</h1>
+                    <p>Adicione um novo veículo ao fluxo de trabalho da oficina.</p>
+                </div>
+
+                <div class="form-wrapper">
+                    <form id="checkInForm" class="glass-form">
+                        
+                        <!-- Client Section -->
+                        <div class="form-section">
+                            <h3><i class="fa-solid fa-user"></i> Informações do Cliente</h3>
+                            <div class="form-row grid-2">
+                                <div class="form-group">
+                                    <label for="owner_name">Nome do Proprietário *</label>
+                                    <input type="text" id="owner_name" required placeholder="Ex: Carlos Oliveira">
+                                </div>
+                                <div class="form-group">
+                                    <label for="owner_phone">Telemóvel *</label>
+                                    <input type="tel" id="owner_phone" required placeholder="Ex: 912 345 678">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Vehicle Section -->
+                        <div class="form-section">
+                            <h3><i class="fa-solid fa-car"></i> Detalhes da Viatura</h3>
+                            <div class="form-row grid-3">
+                                <div class="form-group">
+                                    <label for="veh_plate">Matrícula *</label>
+                                    <input type="text" id="veh_plate" required placeholder="Ex: 45-DF-92" style="text-transform: uppercase;">
+                                </div>
+                                <div class="form-group">
+                                    <label for="veh_brand">Marca *</label>
+                                    <input type="text" id="veh_brand" required placeholder="Ex: Audi">
+                                </div>
+                                <div class="form-group">
+                                    <label for="veh_model">Modelo *</label>
+                                    <input type="text" id="veh_model" required placeholder="Ex: A3 Sportback">
+                                </div>
+                            </div>
+                            
+                            <div class="form-row grid-3">
+                                <div class="form-group">
+                                    <label for="veh_year">Ano</label>
+                                    <input type="number" id="veh_year" placeholder="Ex: 2015">
+                                </div>
+                                <div class="form-group">
+                                    <label for="veh_fuel">Combustível</label>
+                                    <select id="veh_fuel">
+                                        <option value="Diesel">Diesel</option>
+                                        <option value="Gasolina">Gasolina</option>
+                                        <option value="Híbrido">Híbrido</option>
+                                        <option value="Elétrico">Elétrico</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="veh_tech">Técnico Atribuído *</label>
+                                    <select id="veh_tech" required>
+                                        <option value="Afonso Silva">Afonso Silva (Sénior)</option>
+                                        <option value="Vasco Costa">Vasco Costa (Mecânico)</option>
+                                        <option value="Daniel Mota">Daniel Mota (Eletricista)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Damage/Symptoms Section -->
+                        <div class="form-section">
+                            <h3><i class="fa-solid fa-clipboard-list"></i> Queixas & Sintomas</h3>
+                            <div class="form-group">
+                                <label for="veh_fault">Descrição das Anomalias / Notas de Entrada *</label>
+                                <textarea id="veh_fault" required rows="4" placeholder="Descreva os problemas reportados pelo cliente (Ex: Barulho na suspensão ao virar à esquerda, luz de motor acesa no painel...)"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="reset" class="btn btn-secondary">Limpar Dados</button>
+                            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-square-plus"></i> Dar Entrada à Viatura</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Tab Content: Fila de Trabalho -->
+            <section class="tab-content" id="tab-trabalho">
+                <div class="workspace-header">
+                    <h1>Fila de Trabalho Ativa</h1>
+                    <p>Gerir diagnósticos, reparações e conclusão de serviços de viaturas ativas.</p>
+                </div>
+
+                <!-- Filters -->
+                <div class="table-filters">
+                    <div class="filter-group">
+                        <label for="filterWorkStatus">Estado</label>
+                        <select id="filterWorkStatus">
+                            <option value="active">Todos Ativos</option>
+                            <option value="Em Diagnóstico">Em Diagnóstico</option>
+                            <option value="A Reparar">Em Reparação</option>
+                            <option value="Aguardar Peças">Aguardar Peças</option>
+                            <option value="Pronto">Pronto para Entrega</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filterWorkTech">Técnico</label>
+                        <select id="filterWorkTech">
+                            <option value="all">Todos</option>
+                            <option value="Afonso Silva">Afonso Silva</option>
+                            <option value="Vasco Costa">Vasco Costa</option>
+                            <option value="Daniel Mota">Daniel Mota</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Table -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Matrícula</th>
+                                    <th>Viatura</th>
+                                    <th>Proprietário</th>
+                                    <th>Técnico</th>
+                                    <th>Data Entrada</th>
+                                    <th>Estado</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="workTableBody">
+                                <!-- Loaded dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="workNoResults" class="no-results hidden">
+                        <i class="fa-solid fa-filter-circle-xmark"></i>
+                        <p>Nenhuma viatura ativa encontrada com estes filtros.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab Content: Histórico -->
+            <section class="tab-content" id="tab-historico">
+                <div class="workspace-header">
+                    <h1>Histórico de Reparações</h1>
+                    <p>Consultar todas as viaturas entregues e faturas emitidas.</p>
+                </div>
+
+                <!-- Table -->
+                <div class="table-card">
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Matrícula</th>
+                                    <th>Viatura</th>
+                                    <th>Proprietário</th>
+                                    <th>Técnico</th>
+                                    <th>Data Saída</th>
+                                    <th>Valor Faturado</th>
+                                    <th class="text-center">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="historyTableBody">
+                                <!-- Loaded dynamically by JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div id="historyNoResults" class="no-results hidden">
+                        <i class="fa-solid fa-clock"></i>
+                        <p>Ainda não foram efetuadas entregas de viaturas.</p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Toast Notification for Action Confirmation -->
+    <div id="actionToast" class="toast hidden">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMessage">Sucesso!</span>
+    </div>
+
+    <!-- Modal: Detalhes & Gestão de Viatura -->
+    <div id="vehicleModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Gestão de Reparação: <span id="modalPlate">00-XX-00</span></h2>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button type="button" id="btnDeleteVehicle" class="btn btn-secondary btn-small" style="background-color: transparent; border: 1px solid rgba(239, 68, 68, 0.3); color: var(--red); border-radius: 6px; padding: 6px 12px; transition: all 0.2s;" onmouseover="this.style.backgroundColor='rgba(239, 68, 68, 0.1)'; this.style.borderColor='var(--red)';" onmouseout="this.style.backgroundColor='transparent'; this.style.borderColor='rgba(239, 68, 68, 0.3)';" title="Eliminar viatura definitivamente"><i class="fa-solid fa-trash"></i> Eliminar Registo</button>
+                    <button class="close-btn" id="btnCloseModal">&times;</button>
+                </div>
+            </div>
+            
+            <div class="modal-body">
+                
+                <!-- Toggle Screen Tabs -->
+                <div class="modal-tabs">
+                    <button class="modal-tab-btn active" data-modaltab="reparar">Ficha de Obra</button>
+                    <button class="modal-tab-btn" data-modaltab="faturar" id="btnModalTabFatura">Fatura / Recibo</button>
+                </div>
+
+                <!-- Modal Sub-Tab 1: Ficha de Obra (Diagnóstico e Peças) -->
+                <div class="modal-subtabactive" id="modal-tab-reparar">
+                    <div class="modal-info-summary grid-3">
+                        <div>
+                            <span class="meta-label">Proprietário</span>
+                            <span class="meta-value" id="md-owner">--</span>
+                        </div>
+                        <div>
+                            <span class="meta-label">Viatura</span>
+                            <span class="meta-value" id="md-vehicle">--</span>
+                        </div>
+                        <div>
+                            <span class="meta-label">Técnico Atribuído</span>
+                            <span class="meta-value" id="md-tech">--</span>
+                        </div>
+                    </div>
+
+                    <!-- Fault description -->
+                    <div class="modal-section-box">
+                        <h4>Sintomas Reportados:</h4>
+                        <p class="symptom-text" id="md-fault">--</p>
+                    </div>
+
+                    <!-- Flow stepper / Status Update -->
+                    <div class="modal-section-box">
+                        <h4>Estado da Reparação:</h4>
+                        <div class="status-selector-wrapper">
+                            <select id="modalStatusSelect" class="input-select">
+                                <option value="Em Diagnóstico">Em Diagnóstico</option>
+                                <option value="Aguardar Peças">Aguardar Peças</option>
+                                <option value="A Reparar">Em Reparação</option>
+                                <option value="Pronto">Pronto para Entrega</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Diagnostics note -->
+                    <div class="modal-section-box">
+                        <h4>Diagnóstico do Técnico:</h4>
+                        <textarea id="modalDiagnosisNote" rows="2" placeholder="Introduza notas de diagnóstico (Ex: Pastilhas travão gastas, folga no triângulo direito...)"></textarea>
+                    </div>
+
+                    <!-- Parts Addition -->
+                    <div class="modal-section-box">
+                        <h4>Peças & Materiais Aplicados:</h4>
+                        
+                        <!-- List of already added parts -->
+                        <ul class="parts-list" id="modalPartsList">
+                            <!-- Populated dynamically -->
+                        </ul>
+
+                        <!-- Form to add new part -->
+                        <div class="add-part-form">
+                            <input type="text" id="partNameInput" placeholder="Nome da peça...">
+                            <input type="number" id="partPriceInput" placeholder="Preço (€)..." step="0.01">
+                            <button type="button" class="btn btn-primary" id="btnAddPart"><i class="fa-solid fa-plus"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- Labor cost -->
+                    <div class="modal-section-box grid-2 align-center">
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="modalLaborInput">Mão-de-Obra (Custo Total €)</label>
+                            <input type="number" id="modalLaborInput" step="0.01" value="0.00">
+                        </div>
+                        <div class="total-running-price">
+                            <span>Total Estimado:</span>
+                            <strong id="modalTotalRunningPrice">0.00€</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions-bar">
+                        <button type="button" class="btn btn-secondary" id="btnCancelModalDetails">Fechar</button>
+                        <button type="button" class="btn btn-primary" id="btnSaveModalDetails"><i class="fa-solid fa-floppy-disk"></i> Salvar Alterações</button>
+                    </div>
+                </div>
+
+                <!-- Modal Sub-Tab 2: Fatura / Recibo (Impressão e Entrega) -->
+                <div class="modal-subtabhidden" id="modal-tab-faturar">
+                    
+                    <!-- Print Sheet Wrapper (This gets targeted by @media print) -->
+                    <div class="invoice-print-sheet" id="invoicePrintSheet">
+                        
+                        <div class="invoice-header-flex">
+                            <div class="invoice-shop-details">
+                                <h2 class="invoice-shop-logo"><i class="fa-solid fa-screwdriver-wrench"></i> OficinaPro</h2>
+                                <p>Oficina de Reparações Mecânicas Lda.</p>
+                                <p>Zona Industrial Norte, Pavilhão 12B</p>
+                                <p>NIF: 501 234 567 | Tel: +351 210 000 000</p>
+                            </div>
+                            <div class="invoice-meta-details">
+                                <h3>FATURA / RECIBO</h3>
+                                <p><strong>Fatura Nº:</strong> <span id="inv-number">OF-2026/001</span></p>
+                                <p><strong>Data Emissão:</strong> <span id="inv-date">--/--/----</span></p>
+                                <p><strong>Viatura Matrícula:</strong> <span id="inv-plate" style="text-transform: uppercase;">00-XX-00</span></p>
+                            </div>
+                        </div>
+
+                        <hr class="inv-divider">
+
+                        <!-- Client and car detailed summary -->
+                        <div class="invoice-people-grid">
+                            <div>
+                                <h4>CLIENTE</h4>
+                                <p><strong>Nome:</strong> <span id="inv-client-name">--</span></p>
+                                <p><strong>Telemóvel:</strong> <span id="inv-client-phone">--</span></p>
+                            </div>
+                            <div>
+                                <h4>VEÍCULO</h4>
+                                <p><strong>Viatura:</strong> <span id="inv-car-details">--</span></p>
+                                <p><strong>Mecânico:</strong> <span id="inv-car-tech">--</span></p>
+                            </div>
+                        </div>
+
+                        <!-- Diagnosed Symptoms -->
+                        <div class="invoice-diagnostics">
+                            <h4>Descrição dos Serviços e Diagnóstico:</h4>
+                            <p id="inv-diagnosis-summary">Nenhum diagnóstico introduzido.</p>
+                        </div>
+
+                        <!-- Itemized Billing table -->
+                        <table class="invoice-items-table">
+                            <thead>
+                                <tr>
+                                    <th>Descrição do Artigo / Serviço</th>
+                                    <th class="text-right">Preço Unitário</th>
+                                    <th class="text-right">Qtd</th>
+                                    <th class="text-right">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="invoiceItemsBody">
+                                <!-- Populated dynamically by JS -->
+                            </tbody>
+                        </table>
+
+                        <!-- Totals box -->
+                        <div class="invoice-totals-flex">
+                            <div class="totals-row">
+                                <span>Subtotal (Sem IVA):</span>
+                                <span id="inv-subtotal">0.00€</span>
+                            </div>
+                            <div class="totals-row">
+                                <span>IVA (23%):</span>
+                                <span id="inv-tax">0.00€</span>
+                            </div>
+                            <div class="totals-row total-highlight">
+                                <span>TOTAL A PAGAR:</span>
+                                <span id="inv-total-final">0.00€</span>
+                            </div>
+                        </div>
+
+                        <div class="invoice-footer-message">
+                            <p>Obrigado pela sua preferência. Viagem com segurança!</p>
+                            <p class="software-sign">Processado por software certificado OficinaPro v1.2</p>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions-bar no-print-buttons">
+                        <button type="button" class="btn btn-secondary" id="btnBackToDetails"><i class="fa-solid fa-arrow-left"></i> Voltar à Ficha</button>
+                        <button type="button" class="btn btn-secondary" id="btnPrintInvoice"><i class="fa-solid fa-print"></i> Imprimir Fatura</button>
+                        <button type="button" class="btn btn-primary" id="btnDeliverVehicle"><i class="fa-solid fa-truck-ramp-box"></i> Efetuar Entrega ao Cliente</button>
+                    </div>
+
+                    <!-- Already delivered banner -->
+                    <div id="deliveredBanner" class="delivered-success-banner hidden">
+                        <i class="fa-solid fa-circle-check"></i>
+                        Viatura já entregue ao cliente. Historial arquivado.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Script imports -->
+    <script src="app.js"></script>
+</body>
+</html>

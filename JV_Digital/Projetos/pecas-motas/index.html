@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotoSpeed — Peças & Acessórios de Motas</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,600;1,800&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Header/Navbar -->
+    <header class="navbar">
+        <div class="container navbar-container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-motorcycle"></i> Moto<span>Speed</span>
+            </a>
+            <div class="nav-actions">
+                <button class="cart-toggle" onclick="toggleCart()">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <a href="../../index.html" class="hub-back"><i class="fa-solid fa-arrow-left"></i> Hub</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-glow"></div>
+        <div class="container hero-container">
+            <div class="hero-text">
+                <span class="badge"><i class="fa-solid fa-gauge-high"></i> Performance Máxima</span>
+                <h1>Equipa a tua máquina com o melhor material.</h1>
+                <p>Peças de alta performance, escapes desportivos, capacetes homologados e consumíveis de manutenção. Entrega rápida em todo o país.</p>
+                <div class="hero-actions">
+                    <a href="#catalogo" class="btn btn-primary btn-glow">Ver Catálogo</a>
+                    <a href="#catalogo" class="btn btn-secondary" onclick="filterCategory('Capacetes')">Capacetes</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Catalog Section -->
+    <section id="catalogo" class="catalog-section">
+        <div class="container">
+            <div class="section-title text-center">
+                <h2>Catálogo de Produtos</h2>
+                <p>Usa os filtros e a barra de pesquisa para encontrar exatamente o que precisas para a tua mota.</p>
+            </div>
+
+            <!-- Search and Filter Bar -->
+            <div class="catalog-controls">
+                <div class="search-bar">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="productSearch" placeholder="Pesquisar por peça ou marca...">
+                </div>
+                <div class="filter-tabs">
+                    <button class="filter-tab active" onclick="filterCategory('all')">Todos</button>
+                    <button class="filter-tab" onclick="filterCategory('Capacetes')">Capacetes</button>
+                    <button class="filter-tab" onclick="filterCategory('Escapes')">Escapes</button>
+                    <button class="filter-tab" onclick="filterCategory('Manutenção')">Manutenção</button>
+                    <button class="filter-tab" onclick="filterCategory('Travagem')">Travagem</button>
+                </div>
+            </div>
+
+            <!-- Products Grid -->
+            <div class="products-grid" id="productsGrid">
+                <!-- Loaded dynamically by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Side Panel -->
+    <div id="cartPanel" class="cart-panel">
+        <div class="cart-panel-header">
+            <h3><i class="fa-solid fa-cart-shopping"></i> Carrinho de Compras</h3>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-panel-body" id="cartPanelBody">
+            <!-- Loaded dynamically by JS -->
+        </div>
+        <div class="cart-panel-footer">
+            <div class="cart-coupon-wrap">
+                <input type="text" id="couponInput" placeholder="Código: MOTOSPEED10">
+                <button onclick="applyDiscountCoupon()">Aplicar</button>
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row"><span>Subtotal (c/ IVA):</span> <span id="cartSubtotal">0,00€</span></div>
+                <div class="summary-row" id="couponRow" style="display:none; color: var(--green);">
+                    <span>Desconto (10%):</span> <span id="cartDiscount">-0,00€</span>
+                </div>
+                <div class="summary-row total"><span>Total Final:</span> <span id="cartTotal">0,00€</span></div>
+            </div>
+            <button class="btn btn-primary btn-block text-center" id="btnGoCheckout" onclick="openCheckoutModal()" disabled>Finalizar Encomenda</button>
+        </div>
+    </div>
+    <div id="cartOverlay" class="cart-overlay" onclick="toggleCart()"></div>
+
+    <!-- Checkout Modal Dialog -->
+    <div id="checkoutModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Dados de Envio & Encomenda</h2>
+                <button class="close-modal" onclick="closeCheckoutModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="checkoutForm" class="checkout-form">
+                    <div class="form-group">
+                        <label for="ship_name">Nome Completo</label>
+                        <input type="text" id="ship_name" required placeholder="Ex: Diogo Gaspar">
+                    </div>
+                    <div class="form-group">
+                        <label for="ship_phone">Número de Telemóvel</label>
+                        <input type="tel" id="ship_phone" required placeholder="Ex: 912 345 678">
+                    </div>
+                    <div class="form-group">
+                        <label for="ship_address">Morada Completa</label>
+                        <input type="text" id="ship_address" required placeholder="Ex: Rua Central nº 12, 3º Dto">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ship_postal">Código Postal</label>
+                            <input type="text" id="ship_postal" required placeholder="Ex: 1000-001">
+                        </div>
+                        <div class="form-group">
+                            <label for="ship_city">Cidade</label>
+                            <input type="text" id="ship_city" required placeholder="Ex: Lisboa">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block text-center">Confirmar Encomenda</button>
+                </form>
+
+                <!-- Order Success Wrap -->
+                <div id="orderSuccess" class="success-wrap hidden">
+                    <i class="fa-solid fa-circle-check checked-icon"></i>
+                    <h3>Encomenda Confirmada!</h3>
+                    <p>Olá, <strong id="outShipName"></strong>.</p>
+                    <p>Registámos a tua encomenda com o número <strong id="outOrderNum" style="color: var(--primary);">#MS-98273</strong>.</p>
+                    <p>Total faturado: <strong id="outOrderTotal">0,00€</strong>.</p>
+                    <p class="note">📦 A encomenda será expedida nas próximas 24h para a morada fornecida.</p>
+                    <button class="btn btn-secondary btn-block" onclick="closeCheckoutSuccess()">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="cartToast" class="toast hidden"><i class="fa-solid fa-circle-check"></i> Produto adicionado ao carrinho!</div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="logo">
+                <i class="fa-solid fa-motorcycle"></i> Moto<span>Speed</span>
+            </div>
+            <p>&copy; 2026 MotoSpeed — Projeto de Portfólio JV Digital</p>
+            <a href="../../index.html" class="btn btn-secondary btn-small"><i class="fa-solid fa-arrow-left"></i> Voltar ao Hub Central</a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

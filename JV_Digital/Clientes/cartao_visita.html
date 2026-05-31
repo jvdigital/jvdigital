@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JV Digital — Cartão de Visita</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --primary: #3b82f6; --font: 'Outfit', sans-serif; }
+        body {
+            font-family: var(--font);
+            background: #0a0f1a;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            padding: 30px 20px;
+        }
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: radial-gradient(rgba(59,130,246,0.08) 1px, transparent 1px);
+            background-size: 40px 40px;
+            pointer-events: none;
+        }
+
+        .print-hint {
+            position: fixed; top: 20px; right: 20px;
+            display: flex; gap: 10px; z-index: 10;
+        }
+        .print-hint button {
+            background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3);
+            color: #60a5fa; font-family: var(--font); font-size: 13px; font-weight: 600;
+            padding: 10px 18px; border-radius: 8px; cursor: pointer;
+        }
+        .print-hint button.primary { background: #3b82f6; border-color: #3b82f6; color: #fff; }
+
+        @media print {
+            body { background: transparent; justify-content: flex-start; padding: 0; }
+            .print-hint { display: none; }
+            .card-pair { gap: 0; flex-direction: column; page-break-after: avoid; }
+        }
+
+        /* Card container */
+        .card-pair {
+            display: flex; flex-direction: column; gap: 24px;
+            align-items: center; position: relative; z-index: 1;
+        }
+
+        .card-label {
+            color: rgba(255,255,255,0.3); font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase; text-align: center; margin-bottom: 4px;
+        }
+
+        /* ========= FRENTE DO CARTÃO ========= */
+        .card-front {
+            width: 380px; height: 220px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 60%, #0d1525 100%);
+            border-radius: 18px;
+            border: 1px solid rgba(59,130,246,0.25);
+            position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 30px rgba(59,130,246,0.08);
+            display: flex; flex-direction: column; justify-content: space-between;
+            padding: 28px 30px;
+            transition: transform 0.3s ease;
+        }
+        .card-front:hover { transform: translateY(-4px) scale(1.01); }
+
+        /* Glow decoration */
+        .card-front::before {
+            content: '';
+            position: absolute; top: -60px; right: -60px;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(59,130,246,0.25) 0%, transparent 70%);
+        }
+        .card-front::after {
+            content: '';
+            position: absolute; bottom: -40px; left: -40px;
+            width: 150px; height: 150px;
+            background: radial-gradient(circle, rgba(99,102,241,0.15) 0%, transparent 70%);
+        }
+
+        /* Decorative corner lines */
+        .corner-tl, .corner-br {
+            position: absolute; width: 30px; height: 30px;
+            border-color: rgba(59,130,246,0.4); border-style: solid;
+        }
+        .corner-tl { top: 12px; left: 12px; border-width: 1.5px 0 0 1.5px; }
+        .corner-br { bottom: 12px; right: 12px; border-width: 0 1.5px 1.5px 0; }
+
+        .card-front-top { position: relative; z-index: 1; }
+        .card-logo { font-size: 26px; font-weight: 900; letter-spacing: -1px; color: #fff; }
+        .card-logo span { color: var(--primary); }
+        .card-slogan { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 3px; letter-spacing: 1px; }
+
+        .card-front-bottom { position: relative; z-index: 1; }
+        .card-name { font-size: 20px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+        .card-role {
+            display: inline-block;
+            background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3);
+            color: #60a5fa; font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+            text-transform: uppercase; padding: 3px 10px; border-radius: 20px;
+        }
+
+        /* Holographic stripe */
+        .holo-stripe {
+            position: absolute; bottom: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #818cf8, #06b6d4, #22c55e, #3b82f6);
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+        @keyframes shimmer { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
+
+        /* ========= VERSO DO CARTÃO ========= */
+        .card-back {
+            width: 380px; height: 220px;
+            background: linear-gradient(135deg, #111827 0%, #1a2332 100%);
+            border-radius: 18px;
+            border: 1px solid rgba(59,130,246,0.15);
+            position: relative; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column; justify-content: center;
+            padding: 28px 30px;
+            transition: transform 0.3s ease;
+        }
+        .card-back:hover { transform: translateY(-4px) scale(1.01); }
+
+        .card-back::before {
+            content: 'JV';
+            position: absolute; right: 20px; top: 50%; transform: translateY(-50%);
+            font-size: 140px; font-weight: 900;
+            color: rgba(59,130,246,0.04); letter-spacing: -5px;
+            line-height: 1;
+        }
+
+        .contact-list { display: flex; flex-direction: column; gap: 14px; position: relative; z-index: 1; }
+        .contact-item { display: flex; align-items: center; gap: 12px; }
+        .contact-icon {
+            width: 32px; height: 32px;
+            background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+            border-radius: 8px; display: flex; align-items: center; justify-content: center;
+            color: #60a5fa; font-size: 13px; flex-shrink: 0;
+        }
+        .contact-value { font-size: 14px; color: rgba(255,255,255,0.8); font-weight: 500; }
+        .contact-value .sub { font-size: 11px; color: rgba(255,255,255,0.3); display: block; margin-top: 1px; }
+
+        /* QR code placeholder */
+        .qr-area {
+            position: absolute; right: 28px; top: 50%; transform: translateY(-50%);
+            width: 76px; height: 76px;
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 4px;
+            z-index: 1;
+        }
+        .qr-grid {
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; width: 50px;
+        }
+        .qr-cell {
+            width: 8px; height: 8px; border-radius: 1px;
+        }
+        .qr-cell.on { background: rgba(255,255,255,0.7); }
+        .qr-cell.off { background: transparent; }
+        .qr-label { font-size: 7px; color: rgba(255,255,255,0.3); letter-spacing: 1px; text-transform: uppercase; }
+
+        /* Badge de serviços */
+        .services-pills {
+            display: flex; flex-wrap: wrap; gap: 6px;
+            position: absolute; bottom: 20px; left: 30px; right: 110px;
+            z-index: 1;
+        }
+        .service-pill {
+            background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+            color: rgba(255,255,255,0.4); font-size: 9px; font-weight: 600;
+            letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px;
+            border-radius: 20px;
+        }
+
+        /* Info text */
+        .page-info {
+            text-align: center; color: rgba(255,255,255,0.25);
+            font-size: 13px; margin-top: 20px; max-width: 420px;
+            position: relative; z-index: 1;
+        }
+        .page-info strong { color: rgba(255,255,255,0.5); }
+    </style>
+</head>
+<body>
+    <div class="print-hint">
+        <a href="../index.html" style="background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.1); color: #94a3b8; font-family: var(--font); font-size: 13px; font-weight: 600; padding: 10px 18px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; margin-right: 10px;" onmouseover="this.style.color='#fff'; this.style.borderColor='rgba(59,130,246,0.4)';" onmouseout="this.style.color='#94a3b8'; this.style.borderColor='rgba(255,255,255,0.1)';"><i class="fa-solid fa-arrow-left"></i> Voltar ao Hub</a>
+        <button onclick="window.print()" class="primary">🖨️ Imprimir Cartão</button>
+    </div>
+
+    <div class="card-pair">
+
+        <!-- FRENTE -->
+        <div>
+            <div class="card-label">— Frente do Cartão —</div>
+            <div class="card-front">
+                <div class="corner-tl"></div>
+                <div class="corner-br"></div>
+                <div class="holo-stripe"></div>
+
+                <div class="card-front-top">
+                    <div class="card-logo"><span>JV</span>Digital</div>
+                    <div class="card-slogan">Websites modernos para negócios locais</div>
+                </div>
+
+                <div class="card-front-bottom">
+                    <div class="card-name">João Vicente</div>
+                    <div class="card-role">Desenvolvimento Web · TPSI</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VERSO -->
+        <div>
+            <div class="card-label">— Verso do Cartão —</div>
+            <div class="card-back">
+
+                <div class="contact-list">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="contact-value">
+                            jvdigital.pt@gmail.com
+                            <span class="sub">Email de contacto</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-phone"></i></div>
+                        <div class="contact-value">
+                            +351 912 345 678
+                            <span class="sub">Telemóvel / WhatsApp</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-brands fa-instagram"></i></div>
+                        <div class="contact-value">
+                            @jvdigital.pt
+                            <span class="sub">Instagram · Ver portfólio</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="qr-area">
+                    <!-- Decorative QR-style pattern -->
+                    <div class="qr-grid">
+                        <div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell on"></div>
+                        <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div>
+                        <div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div>
+                        <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div>
+                        <div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell on"></div>
+                    </div>
+                    <div class="qr-label">Portfólio</div>
+                </div>
+
+                <div class="services-pills">
+                    <span class="service-pill">Websites</span>
+                    <span class="service-pill">Sistemas</span>
+                    <span class="service-pill">SEO Local</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <p class="page-info">
+        Clique em <strong>Imprimir Cartão</strong> e selecione "Salvar como PDF" para ter o seu cartão de visita digital. Imprima em cartolina para ter a versão física.
+    </p>
+</body>
+</html>

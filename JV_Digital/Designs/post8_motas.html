@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1080">
+    <title>Post 8 – JV Digital | Peças Motas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { width: 1080px; height: 1080px; overflow: hidden; font-family: 'Outfit', sans-serif; background: #07090e; }
+        .post {
+            width: 1080px; height: 1080px;
+            background: linear-gradient(135deg, #07090e 0%, #11141e 100%);
+            position: relative;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Atmospheric glow */
+        .glow-1 { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(249,115,22,0.12) 0%, transparent 70%); top: -150px; right: -150px; }
+        .glow-2 { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%); bottom: -100px; left: -100px; }
+
+        /* Structural lines */
+        .line-h { position: absolute; height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(249,115,22,0.15), transparent); top: 80px; }
+        .line-h2 { position: absolute; height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(249,115,22,0.15), transparent); bottom: 80px; }
+        .line-v { position: absolute; width: 1px; height: 100%; background: linear-gradient(180deg, transparent, rgba(249,115,22,0.15), transparent); left: 80px; }
+        .line-v2 { position: absolute; width: 1px; height: 100%; background: linear-gradient(180deg, transparent, rgba(249,115,22,0.15), transparent); right: 80px; }
+
+        /* Top agency bar */
+        .top-bar {
+            position: absolute;
+            top: 110px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .agency-badge {
+            background: rgba(249,115,22,0.08);
+            border: 1px solid rgba(249,115,22,0.3);
+            color: #f97316;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 30px;
+        }
+
+        /* Left text content */
+        .content {
+            position: absolute;
+            left: 120px;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 480px;
+            z-index: 2;
+        }
+
+        .category-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(249,115,22,0.1);
+            border: 1px solid rgba(249,115,22,0.35);
+            color: #f97316;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 30px;
+            margin-bottom: 24px;
+        }
+
+        .main-title {
+            font-size: 60px;
+            font-weight: 900;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: -1.5px;
+        }
+        .main-title .accent { color: #f97316; }
+        .subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 32px;
+        }
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feature-icon {
+            width: 36px; height: 36px;
+            background: rgba(249, 115, 22, 0.15);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: #f97316;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .feature-text { color: #cbd5e1; font-size: 15px; font-weight: 600; }
+        .cta-btn {
+            display: inline-block;
+            background: #f97316;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(249,115,22,0.3);
+        }
+
+        /* Phone mockup */
+        .phone-wrapper {
+            position: absolute;
+            right: 120px;
+            top: 50%;
+            transform: translateY(-50%) rotate(3deg);
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.6));
+        }
+        .phone {
+            width: 220px;
+            background: #111;
+            border-radius: 32px;
+            border: 4px solid #333;
+            overflow: hidden;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.05);
+        }
+        .phone-notch {
+            width: 90px; height: 18px;
+            background: #333;
+            border-radius: 0 0 12px 12px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        .phone-screen {
+            background: #0f131c;
+            height: 380px;
+            overflow: hidden;
+            position: relative;
+        }
+        .phone-header {
+            background: #181d2a;
+            padding: 12px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-weight: 850;
+            font-size: 12px;
+            border-bottom: 1px solid rgba(249,115,22,0.2);
+        }
+        .phone-header i { color: #f97316; }
+        .phone-body {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .p-card {
+            background: #181d2a;
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .p-card-img { width: 36px; height: 36px; background: #07090e; border-radius: 4px; display:flex; align-items:center; justify-content:center; font-size: 18px;}
+        .p-card-title { font-weight: 700; color: #fff; font-size: 9px; margin-bottom: 2px; }
+        .p-card-price { color: #f97316; font-size: 10px; font-weight: 800; }
+        .p-btn {
+            background: #f97316; color: #fff; text-align: center; font-size: 9px; font-weight: 700; padding: 8px; border-radius: 6px; margin-top: 10px; display: flex; align-items:center; justify-content:center; gap: 6px;
+        }
+
+        /* Bottom bar */
+        .bottom-bar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60px;
+            background: #0b0e14;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 110px;
+        }
+        .jv-logo { color: #f97316; font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+        .jv-logo span { color: #fff; }
+        .handle { color: #475569; font-size: 13px; font-weight: 600; }
+        .price-tag { color: #94a3b8; font-size: 13px; }
+        .price-tag strong { color: #f97316; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <div class="post">
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+        <div class="line-h"></div>
+        <div class="line-h2"></div>
+        <div class="line-v"></div>
+        <div class="line-v2"></div>
+
+        <div class="top-bar">
+            <div class="agency-badge">JV Digital · Showcase</div>
+        </div>
+
+        <!-- Left Content -->
+        <div class="content">
+            <div class="category-tag"><i class="fa-solid fa-motorcycle"></i> Lojas de Motas</div>
+            <div class="main-title">Catálogo Online<br>com <span class="accent">Carrinho</span></div>
+            <p class="subtitle">Expande o teu negócio de peças e acessórios para toda a internet com um catálogo interativo e carrinho de compras local.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon"><i class="fa-solid fa-tags"></i></div>
+                    <div class="feature-text">Filtros de categoria inteligentes</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"><i class="fa-solid fa-basket-shopping"></i></div>
+                    <div class="feature-text">Carrinho dinâmico no ecrã</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"><i class="fa-solid fa-ticket"></i></div>
+                    <div class="feature-text">Cupões de desconto integrados</div>
+                </div>
+            </div>
+            
+            <div class="cta-btn">Ver Projeto →</div>
+        </div>
+
+        <!-- Phone mockup -->
+        <div class="phone-wrapper">
+            <div class="phone">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                    <div class="phone-header">
+                        <span>MotoSpeed</span>
+                        <i class="fa-solid fa-cart-shopping"> (1)</i>
+                    </div>
+                    <div class="phone-body">
+                        <div class="p-card">
+                            <div class="p-card-img">🪖</div>
+                            <div>
+                                <div class="p-card-title">Capacete Arai RX-7V</div>
+                                <div class="p-card-price">749,00€</div>
+                            </div>
+                        </div>
+                        <div class="p-card">
+                            <div class="p-card-img">💨</div>
+                            <div>
+                                <div class="p-card-title">Escape Akrapovič</div>
+                                <div class="p-card-price">890,00€</div>
+                            </div>
+                        </div>
+                        <div class="p-btn"><i class="fa-solid fa-cart-shopping"></i> CHECKOUT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="bottom-bar">
+            <div class="jv-logo">JV<span>Digital</span></div>
+            <div class="handle">@jvdigital.pt</div>
+            <div class="price-tag">A partir de <strong>500€</strong></div>
+        </div>
+    </div>
+</body>
+</html>

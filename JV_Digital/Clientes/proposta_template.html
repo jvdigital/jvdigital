@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial — JV Digital</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0f1a; --surface: #111827; --surface2: #1a2332;
+            --border: rgba(255,255,255,0.07); --primary: #3b82f6;
+            --text: #f1f5f9; --muted: rgba(241,245,249,0.5);
+            --green: #22c55e; --amber: #f59e0b; --red: #ef4444;
+            --font: 'Outfit', sans-serif;
+        }
+        body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* Print styles */
+        @media print {
+            body { background: #fff; color: #111; }
+            .no-print { display: none !important; }
+            .print-page { box-shadow: none !important; border: 1px solid #ddd !important; }
+            :root { --bg: #fff; --surface: #f8fafc; --surface2: #f1f5f9; --border: #e2e8f0; --text: #111; --muted: #666; --primary: #2563eb; }
+        }
+
+        .no-print {
+            position: fixed; top: 20px; right: 20px; z-index: 100;
+            display: flex; gap: 12px;
+        }
+        .no-print button {
+            background: var(--primary); color: #fff;
+            border: none; border-radius: 10px; padding: 12px 22px;
+            font-family: var(--font); font-size: 14px; font-weight: 600;
+            cursor: pointer; display: flex; align-items: center; gap: 8px;
+        }
+        .no-print .btn-edit { background: var(--surface2); border: 1px solid var(--border); }
+
+        .page-wrapper { max-width: 900px; margin: 40px auto; padding: 0 20px 60px; }
+
+        .print-page {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+        }
+
+        /* Header */
+        .prop-header {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            padding: 50px 50px 40px;
+            border-bottom: 1px solid rgba(59,130,246,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        .prop-header::before {
+            content: '';
+            position: absolute; top: -100px; right: -100px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 70%);
+        }
+        .header-flex { display: flex; justify-content: space-between; align-items: flex-start; position: relative; z-index: 1; }
+        .agency-block .logo { font-size: 30px; font-weight: 900; letter-spacing: -1px; }
+        .agency-block .logo span { color: var(--primary); }
+        .agency-block .tagline { color: var(--muted); font-size: 14px; margin-top: 4px; }
+        .agency-block .contact-info { margin-top: 16px; display: flex; flex-direction: column; gap: 4px; }
+        .agency-block .contact-info p { color: var(--muted); font-size: 13px; }
+        .agency-block .contact-info p strong { color: var(--text); }
+        .proposal-meta { text-align: right; }
+        .proposal-meta .prop-label { color: var(--muted); font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+        .proposal-meta .prop-num { font-size: 32px; font-weight: 800; color: var(--primary); margin: 4px 0; }
+        .proposal-meta .prop-date { color: var(--muted); font-size: 13px; }
+        .proposal-meta .status-badge {
+            display: inline-block; margin-top: 10px;
+            background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.4);
+            color: var(--amber); font-size: 12px; font-weight: 600; letter-spacing: 1px;
+            text-transform: uppercase; padding: 5px 14px; border-radius: 20px;
+        }
+
+        /* Client info strip */
+        .client-strip {
+            background: var(--surface2);
+            padding: 24px 50px;
+            border-bottom: 1px solid var(--border);
+            display: flex; gap: 50px;
+        }
+        .client-block { flex: 1; }
+        .client-block .lbl { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+        .client-name { font-size: 22px; font-weight: 700; color: var(--text); content-editable: true; }
+        .client-name[contenteditable="true"] { outline: 2px dashed rgba(59,130,246,0.4); border-radius: 4px; padding: 2px 6px; cursor: text; }
+        .client-detail { font-size: 14px; color: var(--muted); margin-top: 4px; }
+        .client-detail[contenteditable="true"] { outline: 1px dashed rgba(59,130,246,0.3); border-radius: 3px; padding: 1px 4px; cursor: text; }
+
+        /* Body */
+        .prop-body { padding: 40px 50px; }
+
+        /* Section title */
+        .section-title-row {
+            display: flex; align-items: center; gap: 14px;
+            margin-bottom: 20px; margin-top: 36px;
+        }
+        .section-title-row:first-child { margin-top: 0; }
+        .section-icon {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: rgba(59,130,246,0.15); border: 1px solid rgba(59,130,246,0.3);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 16px; flex-shrink: 0;
+        }
+        .section-title-row h2 { font-size: 18px; font-weight: 700; }
+        .section-line { flex: 1; height: 1px; background: var(--border); }
+
+        /* Intro text */
+        .intro-box {
+            background: rgba(59,130,246,0.06);
+            border: 1px solid rgba(59,130,246,0.15);
+            border-radius: 12px;
+            padding: 22px 24px;
+            color: rgba(241,245,249,0.75);
+            font-size: 15px; line-height: 1.8;
+        }
+        .intro-box[contenteditable="true"] { outline: 1px dashed rgba(59,130,246,0.3); cursor: text; }
+
+        /* Deliverables table */
+        .deliverables-table {
+            width: 100%; border-collapse: collapse;
+            margin-bottom: 8px;
+        }
+        .deliverables-table th {
+            background: rgba(255,255,255,0.04);
+            color: var(--muted); font-size: 11px; letter-spacing: 2px;
+            text-transform: uppercase; font-weight: 600;
+            padding: 12px 16px; text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        .deliverables-table td {
+            padding: 14px 16px; border-bottom: 1px solid var(--border);
+            font-size: 14px; vertical-align: top;
+        }
+        .deliverables-table tr:last-child td { border-bottom: none; }
+        .deliverables-table tr:hover td { background: rgba(255,255,255,0.02); }
+        .item-name { font-weight: 600; color: var(--text); }
+        .item-desc { color: var(--muted); font-size: 13px; margin-top: 3px; }
+        .include-check { color: var(--green); font-size: 14px; text-align: center !important; }
+        .price-cell { font-weight: 700; color: var(--primary); font-size: 15px; white-space: nowrap; }
+        .price-cell.included { color: var(--green); font-size: 13px; font-weight: 600; }
+
+        /* Totals box */
+        .totals-box {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+            margin-top: 16px;
+        }
+        .total-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--border);
+            color: var(--muted); font-size: 14px;
+        }
+        .total-row:last-child { border-bottom: none; }
+        .total-row.main { color: var(--text); font-size: 22px; font-weight: 800; padding-top: 14px; }
+        .total-row.main .amount { color: var(--primary); }
+        .discount-text { color: var(--green); font-size: 13px; }
+
+        /* Timeline */
+        .timeline { display: flex; gap: 0; position: relative; margin: 8px 0 0; }
+        .timeline::before { content: ''; position: absolute; top: 20px; left: 20px; right: 20px; height: 2px; background: var(--border); }
+        .tl-step {
+            flex: 1; text-align: center; position: relative; z-index: 1;
+        }
+        .tl-dot {
+            width: 40px; height: 40px; border-radius: 50%;
+            background: var(--surface2); border: 2px solid rgba(59,130,246,0.4);
+            display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 12px; font-size: 16px;
+            color: var(--primary); font-weight: 800;
+        }
+        .tl-label { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+        .tl-days { font-size: 11px; color: var(--muted); }
+
+        /* Terms */
+        .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        .term-card {
+            background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 10px; padding: 16px;
+        }
+        .term-card h4 { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+        .term-card p { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+        /* Signature block */
+        .signature-area {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 30px; margin-top: 10px;
+        }
+        .sig-block {
+            background: var(--surface2); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px 24px;
+            text-align: center;
+        }
+        .sig-line {
+            border-top: 1px solid rgba(255,255,255,0.2);
+            margin: 40px 0 12px;
+        }
+        .sig-name { font-weight: 700; font-size: 15px; }
+        .sig-role { color: var(--muted); font-size: 12px; margin-top: 4px; }
+        .sig-date-label { color: var(--muted); font-size: 11px; margin-top: 14px; letter-spacing: 1px; text-transform: uppercase; }
+        .sig-date-field {
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            width: 120px; margin: 6px auto 0;
+            height: 20px;
+        }
+
+        /* Footer */
+        .prop-footer {
+            background: #0a0f1a;
+            border-top: 1px solid var(--border);
+            padding: 20px 50px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .prop-footer p { font-size: 12px; color: rgba(255,255,255,0.3); }
+    </style>
+</head>
+<body>
+
+    <!-- No-print action bar -->
+    <div class="no-print">
+        <a href="../index.html" style="background: var(--surface2); border: 1px solid var(--border); color: var(--text); border-radius: 10px; padding: 12px 22px; font-family: var(--font); font-size: 14px; font-weight: 600; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: all 0.2s;" onmouseover="this.style.borderColor='rgba(59,130,246,0.4)'; this.style.color='var(--primary)';" onmouseout="this.style.borderColor='var(--border)'; this.style.color='var(--text)';"><i class="fa-solid fa-arrow-left"></i> Voltar ao Hub</a>
+        <button class="btn-edit" onclick="toggleEdit()">✏️ <span id="editBtnText">Editar Dados</span></button>
+        <button onclick="window.print()">🖨️ Imprimir / PDF</button>
+    </div>
+
+    <div class="page-wrapper">
+        <div class="print-page">
+
+            <!-- Header -->
+            <div class="prop-header">
+                <div class="header-flex">
+                    <div class="agency-block">
+                        <div class="logo"><span>JV</span>Digital</div>
+                        <div class="tagline">Websites modernos para negócios locais</div>
+                        <div class="contact-info">
+                            <p><strong>Email:</strong> jvdigital.pt@gmail.com</p>
+                            <p><strong>Telefone:</strong> +351 912 345 678</p>
+                            <p><strong>Instagram:</strong> @jvdigital.pt</p>
+                        </div>
+                    </div>
+                    <div class="proposal-meta">
+                        <div class="prop-label">Proposta Comercial</div>
+                        <div class="prop-num" id="propNum">JV-2026/001</div>
+                        <div class="prop-date" id="propDate">Data: --/--/----</div>
+                        <div class="status-badge">Aguarda Aprovação</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client strip -->
+            <div class="client-strip">
+                <div class="client-block">
+                    <div class="lbl">Proposta para</div>
+                    <div class="client-name" id="clientName">Nome do Negócio</div>
+                    <div class="client-detail" id="clientSector">Setor de Atividade</div>
+                    <div class="client-detail" id="clientCity">📍 Cidade</div>
+                </div>
+                <div class="client-block">
+                    <div class="lbl">Contacto do Cliente</div>
+                    <div class="client-name" id="clientContact" style="font-size: 17px;">Nome do Responsável</div>
+                    <div class="client-detail" id="clientPhone">📞 Telefone</div>
+                    <div class="client-detail" id="clientEmail">✉️ Email</div>
+                </div>
+            </div>
+
+            <!-- Body -->
+            <div class="prop-body">
+
+                <!-- Intro -->
+                <div class="section-title-row">
+                    <div class="section-icon">👋</div>
+                    <h2>Apresentação da Proposta</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="intro-box" id="introText">
+                    Olá! Obrigado pelo interesse nos serviços da JV Digital. Após analisar a presença digital atual do vosso negócio, preparei esta proposta personalizada com as soluções que mais podem beneficiar a vossa marca e captar novos clientes na região.<br><br>
+                    O meu objetivo é simples: criar um website rápido, elegante e funcional que represente o vosso negócio da melhor forma possível na internet — sem complicações técnicas da vossa parte.
+                </div>
+
+                <!-- Deliverables -->
+                <div class="section-title-row">
+                    <div class="section-icon">📦</div>
+                    <h2>O que está incluído</h2>
+                    <div class="section-line"></div>
+                </div>
+                <table class="deliverables-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 45%;">Item / Entregável</th>
+                            <th>Descrição</th>
+                            <th style="width: 60px; text-align: center;">Incl.</th>
+                            <th style="width: 100px; text-align: right;">Valor</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><div class="item-name">Website Profissional</div><div class="item-desc">Design moderno, responsivo e adaptado ao telemóvel</div></td>
+                            <td><div class="item-desc">Até 5 secções: Início, Serviços, Galeria, Sobre, Contacto</div></td>
+                            <td class="include-check">✓</td>
+                            <td class="price-cell" style="text-align: right;">—</td>
+                        </tr>
+                        <tr>
+                            <td><div class="item-name">Design Personalizado</div><div class="item-desc">Cores, fontes e identidade visual do negócio</div></td>
+                            <td><div class="item-desc">Adaptado à imagem e estética já existente do negócio</div></td>
+                            <td class="include-check">✓</td>
+                            <td class="price-cell included" style="text-align: right;">Incluído</td>
+                        </tr>
+                        <tr>
+                            <td><div class="item-name">Otimização para Telemóvel</div><div class="item-desc">100% responsivo (mobile-first)</div></td>
+                            <td><div class="item-desc">Visualização perfeita em qualquer ecrã — iPhone, Android, tablet</div></td>
+                            <td class="include-check">✓</td>
+                            <td class="price-cell included" style="text-align: right;">Incluído</td>
+                        </tr>
+                        <tr>
+                            <td><div class="item-name">SEO Básico Local</div><div class="item-desc">Otimização para pesquisas do Google</div></td>
+                            <td><div class="item-desc">Metatags, Google Maps integrado, velocidade de carregamento</div></td>
+                            <td class="include-check">✓</td>
+                            <td class="price-cell included" style="text-align: right;">Incluído</td>
+                        </tr>
+                        <tr>
+                            <td><div class="item-name">Formulário de Contacto</div><div class="item-desc">Pedidos de informação direto para o email</div></td>
+                            <td><div class="item-desc">Formulário funcional com validação e confirmação automática</div></td>
+                            <td class="include-check">✓</td>
+                            <td class="price-cell included" style="text-align: right;">Incluído</td>
+                        </tr>
+                        <tr>
+                            <td><div class="item-name">Configuração de Domínio</div><div class="item-desc">Ajuda na compra e configuração do domínio .pt ou .com</div></td>
+                            <td><div class="item-desc">Custo do domínio cobrado à parte (~10€/ano). Configuração incluída.</div></td>
+                            <td class="include-check">✓</td>
+                            <td class="price-cell included" style="text-align: right;">Incluído</td>
+                        </tr>
+                        <tr style="background: rgba(59,130,246,0.04);">
+                            <td><div class="item-name" style="color: var(--primary);">Revisões e Suporte (30 dias)</div><div class="item-desc">Ajustes e correções após entrega</div></td>
+                            <td><div class="item-desc">Até 3 rondas de revisão após entrega do projeto. Suporte por WhatsApp.</div></td>
+                            <td class="include-check">✓</td>
+                            <td class="price-cell included" style="text-align: right; color: var(--primary);">Bónus</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Totals -->
+                <div class="totals-box">
+                    <div class="total-row">
+                        <span>Subtotal</span>
+                        <span id="subtotalVal">350,00€</span>
+                    </div>
+                    <div class="total-row">
+                        <span>Desconto especial (cliente de estreia)</span>
+                        <span class="discount-text" id="discountVal">— 0,00€</span>
+                    </div>
+                    <div class="total-row main">
+                        <span>TOTAL DO PROJETO</span>
+                        <span class="amount" id="totalVal">350,00€</span>
+                    </div>
+                    <div class="total-row" style="border-top: 1px solid var(--border); margin-top: 8px; padding-top: 14px;">
+                        <span style="color: var(--muted); font-size: 13px;">💡 Pagamento sugerido: 50% início · 50% entrega</span>
+                        <span style="color: var(--amber); font-weight: 700;" id="halfVal">175,00€ + 175,00€</span>
+                    </div>
+                </div>
+
+                <!-- Timeline -->
+                <div class="section-title-row">
+                    <div class="section-icon">🗓</div>
+                    <h2>Prazo de Entrega</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="timeline">
+                    <div class="tl-step">
+                        <div class="tl-dot">1</div>
+                        <div class="tl-label">Reunião Inicial</div>
+                        <div class="tl-days">Dia 1</div>
+                    </div>
+                    <div class="tl-step">
+                        <div class="tl-dot">2</div>
+                        <div class="tl-label">Proposta Visual</div>
+                        <div class="tl-days">Dias 2-3</div>
+                    </div>
+                    <div class="tl-step">
+                        <div class="tl-dot">3</div>
+                        <div class="tl-label">Desenvolvimento</div>
+                        <div class="tl-days">Dias 4-10</div>
+                    </div>
+                    <div class="tl-step">
+                        <div class="tl-dot">4</div>
+                        <div class="tl-label">Revisões</div>
+                        <div class="tl-days">Dias 11-13</div>
+                    </div>
+                    <div class="tl-step">
+                        <div class="tl-dot">✓</div>
+                        <div class="tl-label">Entrega Final</div>
+                        <div class="tl-days">Dia 14</div>
+                    </div>
+                </div>
+
+                <!-- Terms -->
+                <div class="section-title-row" style="margin-top: 36px;">
+                    <div class="section-icon">📋</div>
+                    <h2>Termos e Condições</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="terms-grid">
+                    <div class="term-card">
+                        <h4>🔒 Propriedade</h4>
+                        <p>Após pagamento integral, todo o código e design do website passa a ser propriedade exclusiva do cliente.</p>
+                    </div>
+                    <div class="term-card">
+                        <h4>⏳ Validade da Proposta</h4>
+                        <p>Esta proposta é válida por 15 dias a contar da data de emissão. Preços podem ser revistos após esse período.</p>
+                    </div>
+                    <div class="term-card">
+                        <h4>📸 Conteúdo Fornecido</h4>
+                        <p>O cliente fornece textos e fotografias. Criação de conteúdo adicional pode ter custo extra a definir.</p>
+                    </div>
+                    <div class="term-card">
+                        <h4>🌐 Alojamento</h4>
+                        <p>O alojamento web (hosting) não está incluído. Pode ser orientado o cliente para soluções com custo a partir de 2€/mês.</p>
+                    </div>
+                </div>
+
+                <!-- Signature -->
+                <div class="section-title-row" style="margin-top: 36px;">
+                    <div class="section-icon">✍️</div>
+                    <h2>Aceitação da Proposta</h2>
+                    <div class="section-line"></div>
+                </div>
+                <div class="signature-area">
+                    <div class="sig-block">
+                        <div class="sig-line"></div>
+                        <div class="sig-name">João Vicente</div>
+                        <div class="sig-role">JV Digital — Responsável pelo Projeto</div>
+                        <div class="sig-date-label">Data</div>
+                        <div class="sig-date-field"></div>
+                    </div>
+                    <div class="sig-block">
+                        <div class="sig-line"></div>
+                        <div class="sig-name" id="sigClientName">Nome do Cliente</div>
+                        <div class="sig-role">Representante do Negócio</div>
+                        <div class="sig-date-label">Data</div>
+                        <div class="sig-date-field"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Footer -->
+            <div class="prop-footer">
+                <p>JV Digital · jvdigital.pt@gmail.com · +351 912 345 678</p>
+                <p>Proposta gerada em <span id="footerDate">--/--/----</span></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Set dates
+        const today = new Date();
+        const fmt = d => `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
+        document.getElementById('propDate').textContent = `Data: ${fmt(today)}`;
+        document.getElementById('footerDate').textContent = fmt(today);
+
+        // Proposal number
+        const propNum = `JV-${today.getFullYear()}/${String(Math.floor(Math.random()*900)+100)}`;
+        document.getElementById('propNum').textContent = propNum;
+
+        // Edit mode toggle
+        const editableIds = ['clientName','clientSector','clientCity','clientContact','clientPhone','clientEmail','introText','subtotalVal','discountVal','totalVal','halfVal','sigClientName'];
+        let editMode = false;
+        function toggleEdit() {
+            editMode = !editMode;
+            document.getElementById('editBtnText').textContent = editMode ? 'Fechar Edição' : 'Editar Dados';
+            editableIds.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.contentEditable = editMode ? 'true' : 'false';
+            });
+        }
+
+        // Initialize as non-editable
+        editableIds.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.contentEditable = 'false';
+        });
+    </script>
+</body>
+</html>

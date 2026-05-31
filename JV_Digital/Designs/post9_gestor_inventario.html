@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1080">
+    <title>Post 9 – JV Digital | Gestor Inventário</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { width: 1080px; height: 1080px; overflow: hidden; font-family: 'Outfit', sans-serif; background: #070a10; }
+        .post {
+            width: 1080px; height: 1080px;
+            background: linear-gradient(135deg, #070a10 0%, #0f1524 100%);
+            position: relative;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Atmospheric glow */
+        .glow-1 { position: absolute; width: 600px; height: 600px; background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%); top: -150px; left: -150px; }
+        .glow-2 { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(16,185,129,0.06) 0%, transparent 70%); bottom: -100px; right: -100px; }
+
+        /* Structural lines */
+        .line-h { position: absolute; height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(59,130,246,0.15), transparent); top: 80px; }
+        .line-h2 { position: absolute; height: 1px; width: 100%; background: linear-gradient(90deg, transparent, rgba(59,130,246,0.15), transparent); bottom: 80px; }
+        .line-v { position: absolute; width: 1px; height: 100%; background: linear-gradient(180deg, transparent, rgba(59,130,246,0.15), transparent); left: 80px; }
+        .line-v2 { position: absolute; width: 1px; height: 100%; background: linear-gradient(180deg, transparent, rgba(59,130,246,0.15), transparent); right: 80px; }
+
+        /* Top agency bar */
+        .top-bar {
+            position: absolute;
+            top: 110px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .agency-badge {
+            background: rgba(59,130,246,0.08);
+            border: 1px solid rgba(59,130,246,0.3);
+            color: #3b82f6;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            padding: 6px 18px;
+            border-radius: 30px;
+        }
+
+        /* Left text content */
+        .content {
+            position: absolute;
+            left: 120px;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 480px;
+            z-index: 2;
+        }
+
+        .category-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(59,130,246,0.1);
+            border: 1px solid rgba(59,130,246,0.35);
+            color: #3b82f6;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 8px 16px;
+            border-radius: 30px;
+            margin-bottom: 24px;
+        }
+
+        .main-title {
+            font-size: 60px;
+            font-weight: 900;
+            line-height: 1.1;
+            color: #fff;
+            margin-bottom: 12px;
+            letter-spacing: -1.5px;
+        }
+        .main-title .accent { color: #3b82f6; }
+        .subtitle {
+            font-size: 18px;
+            color: #94a3b8;
+            line-height: 1.5;
+            margin-bottom: 32px;
+        }
+
+        .features {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .feature-icon {
+            width: 36px; height: 36px;
+            background: rgba(59, 130, 246, 0.15);
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            color: #3b82f6;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .feature-text { color: #cbd5e1; font-size: 15px; font-weight: 600; }
+        .cta-btn {
+            display: inline-block;
+            background: #3b82f6;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            padding: 14px 32px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+        }
+
+        /* Computer Mockup */
+        .screen-wrapper {
+            position: absolute;
+            right: 100px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-1deg);
+            filter: drop-shadow(0 30px 60px rgba(0,0,0,0.5));
+        }
+        .screen {
+            width: 340px;
+            background: #1e293b;
+            border-radius: 12px;
+            border: 4px solid #475569;
+            overflow: hidden;
+        }
+        .screen-bar {
+            background: #334155;
+            padding: 8px 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .screen-bar .dot { width: 8px; height: 8px; border-radius: 50%; background: #475569; }
+        .screen-bar .dot.red { background: #ef4444; }
+        .screen-bar .dot.yellow { background: #f59e0b; }
+        .screen-bar .dot.green { background: #10b981; }
+        .screen-bar .url { font-size: 8px; color: #94a3b8; margin-left: 20px; font-family: monospace; }
+        
+        .screen-body {
+            background: #0f172a;
+            height: 240px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .dashboard-row { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+        .d-card { background: #1e293b; border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 10px; }
+        .d-card .lbl { font-size: 7px; color: #94a3b8; text-transform: uppercase; font-weight: 700;}
+        .d-card .val { font-size: 14px; font-weight: 800; color: #fff; margin-top: 2px;}
+        .d-card .val.red { color: #ef4444; }
+        .d-card .val.green { color: #10b981; }
+        
+        .d-table-box { background: #1e293b; border: 1px solid rgba(255,255,255,0.05); border-radius: 6px; padding: 10px; flex-grow: 1;}
+        .d-table-title { font-size: 8px; font-weight: 700; color: #fff; text-transform: uppercase; margin-bottom: 6px;}
+        .d-table { width: 100%; border-collapse: collapse; font-size: 7px; text-align: left;}
+        .d-table th, .d-table td { padding: 4px 6px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .d-table th { color: #94a3b8; }
+        .d-table td strong { color: #3b82f6; }
+        .d-table td .badge-red { background: rgba(239,68,68,0.15); color: #ef4444; padding: 1px 4px; border-radius: 3px; font-weight: 700;}
+
+        /* Bottom bar */
+        .bottom-bar {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 60px;
+            background: #090d16;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 110px;
+        }
+        .jv-logo { color: #3b82f6; font-size: 18px; font-weight: 900; letter-spacing: -0.5px; }
+        .jv-logo span { color: #fff; }
+        .handle { color: #475569; font-size: 13px; font-weight: 600; }
+        .price-tag { color: #94a3b8; font-size: 13px; }
+        .price-tag strong { color: #3b82f6; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <div class="post">
+        <div class="glow-1"></div>
+        <div class="glow-2"></div>
+        <div class="line-h"></div>
+        <div class="line-h2"></div>
+        <div class="line-v"></div>
+        <div class="line-v2"></div>
+
+        <div class="top-bar">
+            <div class="agency-badge">JV Digital · Dashboard</div>
+        </div>
+
+        <!-- Left Content -->
+        <div class="content">
+            <div class="category-tag"><i class="fa-solid fa-boxes-stacked"></i> Aplicações Web</div>
+            <div class="main-title">Gestão de Stock<br>e <span class="accent">Inventário</span></div>
+            <p class="subtitle">Sistemas administrativos sob medida para controlo de stock, alertas de reabastecimento críticos e estatísticas de lucro.</p>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon"><i class="fa-solid fa-circle-exclamation"></i></div>
+                    <div class="feature-text">Alertas automáticos de rutura de stock</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"><i class="fa-solid fa-arrow-right-arrow-left"></i></div>
+                    <div class="feature-text">Registo detalhado de movimentos</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon"><i class="fa-solid fa-file-excel"></i></div>
+                    <div class="feature-text">Exportação compatível com Excel</div>
+                </div>
+            </div>
+            
+            <div class="cta-btn">Ver Projeto →</div>
+        </div>
+
+        <!-- Computer mockup -->
+        <div class="screen-wrapper">
+            <div class="screen">
+                <div class="screen-bar">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="url">http://localhost:3000/stockpro</span>
+                </div>
+                <div class="screen-body">
+                    <div class="dashboard-row">
+                        <div class="d-card">
+                            <span class="lbl">Valor de Stock</span>
+                            <div class="val">2,450.00€</div>
+                        </div>
+                        <div class="d-card">
+                            <span class="lbl">Stock Crítico</span>
+                            <div class="val red">2 artigos</div>
+                        </div>
+                    </div>
+                    <div class="d-table-box">
+                        <div class="d-table-title">Stock Alerta</div>
+                        <table class="d-table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nome Artigo</th>
+                                    <th>Stock</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>PAS-BRE-SI</strong></td>
+                                    <td>Pastilhas Brembo</td>
+                                    <td><span class="badge-red">1 un</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>FIL-HIF-204</strong></td>
+                                    <td>Filtro HF204</td>
+                                    <td><span class="badge-red">0 un</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="bottom-bar">
+            <div class="jv-logo">JV<span>Digital</span></div>
+            <div class="handle">@jvdigital.pt</div>
+            <div class="price-tag">A partir de <strong>600€</strong></div>
+        </div>
+    </div>
+</body>
+</html>

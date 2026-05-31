@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockPro — Gestão de Inventário de Peças</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-boxes-stacked"></i> Stock<span>Pro</span>
+            </div>
+            <nav class="menu">
+                <a href="#" class="menu-item active" data-target="dashboard-section"><i class="fa-solid fa-chart-line"></i> Dashboard</a>
+                <a href="#" class="menu-item" data-target="inventory-section"><i class="fa-solid fa-list-check"></i> Inventário</a>
+                <a href="#" class="menu-item" data-target="movements-section"><i class="fa-solid fa-arrow-right-arrow-left"></i> Movimentos</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="../../index.html" class="hub-back"><i class="fa-solid fa-arrow-left"></i> Hub Central</a>
+            </div>
+        </aside>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <!-- Header -->
+            <header class="header">
+                <div>
+                    <h1>Gestão de Inventário</h1>
+                    <p class="subtitle">Controlo de stock de peças de motas e oficina em tempo real.</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="exportInventoryToCSV()"><i class="fa-solid fa-file-csv"></i> Exportar CSV</button>
+                    <button class="btn btn-primary" onclick="openAddPartModal()"><i class="fa-solid fa-plus"></i> Nova Peça</button>
+                </div>
+            </header>
+
+            <!-- SECTION: Dashboard -->
+            <div class="section-content active" id="dashboard-section">
+                <!-- Stats Summary -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="label">Valor Total do Stock</span>
+                            <span class="value" id="statValue">0,00€</span>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-wallet"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="label">Lucro Estimado</span>
+                            <span class="value" id="statProfit">0,00€</span>
+                        </div>
+                        <div class="stat-icon green"><i class="fa-solid fa-chart-pie"></i></div>
+                    </div>
+                    <div class="stat-card" id="statAlertStockCard">
+                        <div class="stat-info">
+                            <span class="label">Stock Crítico (Ruturas)</span>
+                            <span class="value" id="statCritical">0</span>
+                        </div>
+                        <div class="stat-icon red"><i class="fa-solid fa-triangle-exclamation"></i></div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-info">
+                            <span class="label">Total Referências</span>
+                            <span class="value" id="statTotalItems">0</span>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-tags"></i></div>
+                    </div>
+                </div>
+
+                <!-- Recent Movements & Quick Alert Table -->
+                <div class="dashboard-tables grid-2">
+                    <div class="card-box">
+                        <h3><i class="fa-solid fa-triangle-exclamation" style="color: var(--red);"></i> Alertas de Reabastecimento</h3>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Peça</th>
+                                        <th>Qtd Atual</th>
+                                        <th>Limiar Mín.</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="alertStockTableBody">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="card-box">
+                        <h3><i class="fa-solid fa-clock-rotate-left"></i> Últimos Movimentos</h3>
+                        <div class="table-responsive">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Data</th>
+                                        <th>Peça</th>
+                                        <th>Tipo</th>
+                                        <th>Qtd</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recentMovementsTableBody">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: Inventory -->
+            <div class="section-content" id="inventory-section">
+                <!-- Search & Filters -->
+                <div class="filter-panel">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="inventorySearch" placeholder="Pesquisar por código, marca ou nome de peça...">
+                    </div>
+                    <select id="inventoryCategoryFilter" class="input-select">
+                        <option value="all">Todas as Categorias</option>
+                        <option value="Motas">Acessórios de Motas</option>
+                        <option value="Oficina">Consumíveis Oficina</option>
+                        <option value="Geral">Peças Gerais</option>
+                    </select>
+                </div>
+
+                <!-- Inventory Table -->
+                <div class="card-box">
+                    <div class="table-responsive">
+                        <table class="data-table main-inventory-table">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nome do Artigo</th>
+                                    <th>Categoria</th>
+                                    <th>Stock</th>
+                                    <th>Preço Custo</th>
+                                    <th>Preço Venda</th>
+                                    <th>Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mainInventoryTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION: Movements Log -->
+            <div class="section-content" id="movements-section">
+                <div class="card-box">
+                    <h3>Historial Completo de Entradas e Saídas</h3>
+                    <div class="table-responsive" style="margin-top: 15px;">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Data & Hora</th>
+                                    <th>Código</th>
+                                    <th>Nome do Artigo</th>
+                                    <th>Movimento</th>
+                                    <th>Qtd</th>
+                                    <th>Utilizador / Motivo</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fullMovementsTableBody">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- MODAL: Add New Part -->
+    <div id="addPartModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Adicionar Peça ao Inventário</h2>
+                <button class="close-modal" onclick="closeAddPartModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addPartForm" class="modal-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="part_code">Código Artigo (SKU) *</label>
+                            <input type="text" id="part_code" required placeholder="Ex: CAP-AGV-K6" style="text-transform: uppercase;">
+                        </div>
+                        <div class="form-group">
+                            <label for="part_category">Categoria *</label>
+                            <select id="part_category">
+                                <option value="Motas">Acessórios de Motas</option>
+                                <option value="Oficina">Consumíveis Oficina</option>
+                                <option value="Geral">Peças Gerais</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="part_name">Nome da Peça / Artigo *</label>
+                        <input type="text" id="part_name" required placeholder="Ex: Capacete AGV K6 Mono Matte">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="part_qty">Stock Inicial *</label>
+                            <input type="number" id="part_qty" required min="0" value="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="part_min">Stock Mínimo (Alerta) *</label>
+                            <input type="number" id="part_min" required min="0" value="2">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="part_cost">Preço de Custo (€) *</label>
+                            <input type="number" id="part_cost" required step="0.01" min="0" placeholder="0.00">
+                        </div>
+                        <div class="form-group">
+                            <label for="part_sell">Preço de Venda (€) *</label>
+                            <input type="number" id="part_sell" required step="0.01" min="0" placeholder="0.00">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block text-center"><i class="fa-solid fa-floppy-disk"></i> Registar Artigo</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: Adjust Stock -->
+    <div id="adjustStockModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Movimento de Stock: <span id="adjustModalTitle" style="color: var(--primary);">Artigo</span></h2>
+                <button class="close-modal" onclick="closeAdjustStockModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="adjust-meta-box">
+                    <div><span>Stock Atual:</span> <strong id="adjustCurrentStock">0</strong></div>
+                    <div><span>Custo / Venda:</span> <strong id="adjustPrices">0.00€ / 0.00€</strong></div>
+                </div>
+                <form id="adjustStockForm" class="modal-form">
+                    <input type="hidden" id="adjust_part_id">
+                    <div class="form-group">
+                        <label>Tipo de Movimento</label>
+                        <div class="movement-toggle-wrap">
+                            <label class="toggle-card selected">
+                                <input type="radio" name="adjust_type" value="in" checked>
+                                <span class="text-green"><i class="fa-solid fa-circle-arrow-down"></i> Entrada (Soma)</span>
+                            </label>
+                            <label class="toggle-card">
+                                <input type="radio" name="adjust_type" value="out">
+                                <span class="text-red"><i class="fa-solid fa-circle-arrow-up"></i> Saída (Subtrai)</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="adjust_qty">Quantidade a Ajustar *</label>
+                            <input type="number" id="adjust_qty" required min="1" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="adjust_reason">Motivo / Operação *</label>
+                            <select id="adjust_reason">
+                                <option value="Reabastecimento Fornecedor">Reabastecimento Fornecedor</option>
+                                <option value="Venda ao Balcão">Venda ao Balcão</option>
+                                <option value="Aplicação em Reparação">Aplicação em Reparação</option>
+                                <option value="Ajuste de Inventário">Ajuste de Inventário</option>
+                                <option value="Devolução de Cliente">Devolução de Cliente</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block text-center">Registrar Ajuste de Stock</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="stockToast" class="toast hidden"><i class="fa-solid fa-circle-check"></i> Operação registada com sucesso!</div>
+
+</body>
+</html>
