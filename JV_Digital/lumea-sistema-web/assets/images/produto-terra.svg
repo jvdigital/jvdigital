@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 720">
+  <defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#f1e3d4"/><stop offset="1" stop-color="#9a755d"/></linearGradient></defs>
+  <rect width="900" height="720" fill="url(#bg)"/>
+  <circle cx="710" cy="160" r="110" fill="#1f2823" opacity=".12"/>
+  <circle cx="220" cy="210" r="70" fill="#fff8ef" opacity=".5"/>
+  <path d="M205 335c25 150 120 230 245 230s220-80 245-230" fill="#b98261" stroke="#33241e" stroke-width="8"/>
+  <ellipse cx="450" cy="334" rx="250" ry="86" fill="#d2a987" stroke="#33241e" stroke-width="8"/>
+  <ellipse cx="450" cy="326" rx="178" ry="48" fill="#6f4736" opacity=".55"/>
+  <path d="M270 440c85 42 248 58 372-12M320 500c76 22 167 27 263 3" fill="none" stroke="#f4dcc1" stroke-width="9" stroke-linecap="round" opacity=".45"/>
+  <path d="M560 185c55-30 88-13 118-54-1 68-45 104-118 54zM333 204c-50-28-80-11-108-49 1 62 41 94 108 49z" fill="#475a43" opacity=".82"/>
+  <text x="450" y="655" text-anchor="middle" fill="#33241e" font-family="Georgia, serif" font-size="42" letter-spacing="5">TERRA</text>
+</svg>

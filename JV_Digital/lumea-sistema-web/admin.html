@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LUMEA — Gestão interna local</title>
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#1a1713">
+  <link rel="icon" href="assets/images/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body class="admin-body">
+  <div class="login-screen" id="loginScreen">
+    <form class="card login-card" id="loginForm">
+      <span class="eyebrow">Gestão interna</span>
+      <h1 style="font-size:3rem;margin:.6rem 0 1rem">LUMEA</h1>
+      <p>Entre no painel para gerir marcações, galeria, serviços, SEO, Analytics e configurações locais.</p>
+      <div class="form-field" style="margin-top:1.3rem">
+        <label for="password">Palavra-passe</label>
+        <input type="password" id="password" autocomplete="current-password" required placeholder="admin123">
+      </div>
+      <div class="form-actions">
+        <button class="btn" type="submit">Entrar</button>
+        <a class="btn secondary" href="index.html">Voltar ao site</a>
+      </div>
+      <p class="tiny" style="margin-top:1rem">Palavra-passe inicial: <strong>admin123</strong>. Altere-a nas definições antes de publicar.</p>
+      <div class="notice" id="loginNotice"></div>
+    </form>
+  </div>
+
+  <div class="admin-shell hidden" id="adminShell">
+    <aside class="admin-sidebar">
+      <a class="brand" href="index.html"><span class="brand-mark">L</span><span>LUMEA</span></a>
+      <p style="margin-top:1rem">Painel local para gerir conteúdo e exportar/importar dados.</p>
+      <nav class="admin-nav" aria-label="Navegação do painel">
+        <button type="button" class="active" data-tab="dashboard">Dashboard</button>
+        <button type="button" data-tab="bookings">Marcações</button>
+        <button type="button" data-tab="products">Galeria/produtos</button>
+        <button type="button" data-tab="services">Serviços</button>
+        <button type="button" data-tab="settings">SEO & definições</button>
+        <button type="button" data-tab="data">Dados locais</button>
+      </nav>
+      <div style="margin-top:2rem;display:grid;gap:.7rem">
+        <a class="btn secondary small" href="index.html">Ver site</a>
+        <button class="btn ghost small" id="logoutBtn" type="button">Terminar sessão</button>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div class="admin-top">
+        <div>
+          <span class="eyebrow" id="tabEyebrow">Dashboard</span>
+          <h2 id="tabTitle">Resumo do sistema</h2>
+        </div>
+        <div class="hero-actions">
+          <button class="btn secondary small" id="exportQuick" type="button">Exportar JSON</button>
+          <button class="btn small" id="saveAll" type="button">Guardar alterações</button>
+        </div>
+      </div>
+
+      <section class="admin-grid" data-panel="dashboard">
+        <div class="kpi-grid">
+          <article class="card kpi"><span class="tiny">Marcações</span><strong id="kpiBookings">0</strong><p>Total registado localmente.</p></article>
+          <article class="card kpi"><span class="tiny">Pendentes</span><strong id="kpiPending">0</strong><p>A aguardar confirmação.</p></article>
+          <article class="card kpi"><span class="tiny">Produtos</span><strong id="kpiProducts">0</strong><p>Itens na galeria.</p></article>
+          <article class="card kpi"><span class="tiny">Serviços</span><strong id="kpiServices">0</strong><p>Serviços disponíveis.</p></article>
+        </div>
+        <article class="card">
+          <h3>Próximas marcações</h3>
+          <div class="table-wrap" style="margin-top:1rem"><table id="nextBookingsTable"></table></div>
+        </article>
+        <article class="card">
+          <h3>Notas de publicação</h3>
+          <p style="margin-top:.8rem">Este projecto usa dados locais. Para receber marcações de visitantes em dispositivos diferentes, publique com uma base de dados ou continue a usar o botão WhatsApp como confirmação externa.</p>
+        </article>
+      </section>
+
+      <section class="admin-grid hidden" data-panel="bookings">
+        <article class="card">
+          <div class="admin-top" style="margin-bottom:1rem">
+            <div><h3>Lista de marcações</h3><p>Altere estados, apague registos ou exporte os dados.</p></div>
+            <button class="btn secondary small" id="clearCancelled" type="button">Limpar canceladas</button>
+          </div>
+          <div class="table-wrap"><table id="bookingsTable"></table></div>
+        </article>
+      </section>
+
+      <section class="admin-grid hidden" data-panel="products">
+        <article class="card">
+          <div class="admin-top" style="margin-bottom:1rem">
+            <div><h3>Galeria e produtos</h3><p>Adicione fotografias por URL ou carregue ficheiros locais. As imagens carregadas ficam em base64 no navegador.</p></div>
+            <button class="btn small" id="addProduct" type="button">Adicionar produto</button>
+          </div>
+          <div class="admin-grid" id="productsEditor"></div>
+        </article>
+      </section>
+
+      <section class="admin-grid hidden" data-panel="services">
+        <article class="card">
+          <div class="admin-top" style="margin-bottom:1rem">
+            <div><h3>Serviços de marcação</h3><p>Estes serviços aparecem no site e no formulário de marcações.</p></div>
+            <button class="btn small" id="addService" type="button">Adicionar serviço</button>
+          </div>
+          <div class="admin-grid" id="servicesEditor"></div>
+        </article>
+      </section>
+
+      <section class="admin-grid hidden" data-panel="settings">
+        <article class="card">
+          <h3>Identidade, contactos e SEO</h3>
+          <div class="editor-grid" style="margin-top:1rem">
+            <div class="form-field"><label for="brand">Marca</label><input id="brand"></div>
+            <div class="form-field"><label for="email">Email</label><input id="email" type="email"></div>
+            <div class="form-field"><label for="phone">Telefone</label><input id="phone"></div>
+            <div class="form-field"><label for="whatsappNumber">WhatsApp internacional sem +</label><input id="whatsappNumber"></div>
+            <div class="form-field full"><label for="address">Morada</label><input id="address"></div>
+            <div class="form-field full"><label for="googleBusinessUrl">URL do Perfil de Empresa Google</label><input id="googleBusinessUrl"></div>
+            <div class="form-field"><label for="googleAnalyticsId">Google Analytics 4 Measurement ID</label><input id="googleAnalyticsId" placeholder="G-XXXXXXXXXX"></div>
+            <div class="form-field"><label for="appointmentDurationMinutes">Duração base das marcações</label><input id="appointmentDurationMinutes" type="number" min="15" step="15"></div>
+            <div class="form-field full"><label for="openingHoursPt">Horário PT</label><input id="openingHoursPt"></div>
+            <div class="form-field full"><label for="openingHoursEn">Horário EN</label><input id="openingHoursEn"></div>
+            <div class="form-field full"><label for="timeSlots">Horas disponíveis, separadas por vírgula</label><input id="timeSlots" placeholder="10:00, 11:00, 12:00"></div>
+            <div class="form-field full"><label for="seoKeywords">Palavras-chave SEO, separadas por vírgula</label><textarea id="seoKeywords"></textarea></div>
+            <div class="form-field full"><label for="adminPassword">Nova palavra-passe do painel</label><input id="adminPassword" type="password" placeholder="Deixe vazio para manter"></div>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Google Business e Analytics</h3>
+          <p style="margin-top:.8rem">Depois de verificar o Perfil de Empresa no Google, cole aqui o URL público. Para Analytics, crie uma propriedade GA4 e substitua <strong>G-XXXXXXXXXX</strong> pelo Measurement ID.</p>
+        </article>
+      </section>
+
+      <section class="admin-grid hidden" data-panel="data">
+        <article class="card">
+          <h3>Exportar/importar dados locais</h3>
+          <p style="margin-top:.8rem">Use esta zona para cópias de segurança, migração para outro computador ou restauro.</p>
+          <div class="form-actions">
+            <button class="btn" id="exportData" type="button">Exportar JSON</button>
+            <label class="btn secondary" for="importData">Importar JSON</label>
+            <input class="hidden" id="importData" type="file" accept="application/json">
+            <button class="btn danger" id="resetData" type="button">Repor dados iniciais</button>
+          </div>
+        </article>
+        <article class="card">
+          <h3>Pré-visualização JSON</h3>
+          <textarea id="jsonPreview" style="min-height:360px;font-family:ui-monospace,Menlo,Consolas,monospace"></textarea>
+        </article>
+      </section>
+
+      <div class="notice" id="adminNotice" style="position:fixed;right:1rem;bottom:1rem;max-width:420px"></div>
+    </main>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

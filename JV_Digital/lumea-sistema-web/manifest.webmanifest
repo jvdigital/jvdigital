@@ -1,0 +1,12 @@
+{
+  "name": "LUMEA — Atelier Botânico",
+  "short_name": "LUMEA",
+  "description": "Sistema web local com marcações, galeria, WhatsApp, assistente IA e SEO.",
+  "start_url": "/?lang=pt",
+  "display": "standalone",
+  "background_color": "#fffaf3",
+  "theme_color": "#1a1713",
+  "icons": [
+    { "src": "assets/images/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

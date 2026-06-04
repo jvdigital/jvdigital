@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#1a1713"/><stop offset="1" stop-color="#8d6b53"/></linearGradient></defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="950" cy="150" r="180" fill="#f4dcc1" opacity=".16"/>
+  <circle cx="170" cy="510" r="140" fill="#f8ead7" opacity=".12"/>
+  <text x="120" y="250" fill="#f8ead7" font-family="Georgia, serif" font-size="92" letter-spacing="12">LUMEA</text>
+  <text x="126" y="330" fill="#f4dcc1" font-family="Arial, sans-serif" font-size="34">Atelier botânico de fragrâncias, cerâmica e presentes sensoriais.</text>
+  <text x="126" y="396" fill="#fff8ef" font-family="Arial, sans-serif" font-size="27">Marcações online · Galeria · Assistente IA · PT/EN · SEO local</text>
+</svg>

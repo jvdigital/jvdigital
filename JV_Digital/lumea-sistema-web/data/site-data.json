@@ -1,0 +1,6 @@
+{
+  "project": "LUMEA — Sistema web local",
+  "version": "1.0.0",
+  "description": "Dados locais de arranque. A aplicação usa localStorage para edição e funcionamento sem backend.",
+  "note": "A cópia editável principal está em js/config.js para permitir abrir o projecto por servidor estático. Este ficheiro serve para importação/exportação e auditoria."
+}

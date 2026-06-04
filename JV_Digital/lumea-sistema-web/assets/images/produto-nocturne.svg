@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 720">
+  <defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#18201c"/><stop offset="1" stop-color="#73533f"/></linearGradient><linearGradient id="b" x1="0" x2="0" y1="0" y2="1"><stop stop-color="#f5d9b8"/><stop offset="1" stop-color="#8d6b53"/></linearGradient></defs>
+  <rect width="900" height="720" fill="url(#bg)"/>
+  <circle cx="705" cy="145" r="72" fill="#f9e3b8" opacity=".88"/>
+  <circle cx="676" cy="132" r="72" fill="#24302a" opacity=".95"/>
+  <g stroke="#e4c199" stroke-width="9" stroke-linecap="round" opacity=".86">
+    <path d="M380 312 310 140M430 302 415 110M480 304 530 118M520 320 650 165"/>
+  </g>
+  <rect x="322" y="292" width="256" height="265" rx="44" fill="url(#b)" stroke="#f8ead7" stroke-width="7"/>
+  <rect x="370" y="366" width="160" height="95" rx="24" fill="#1c221e" opacity=".85"/>
+  <text x="450" y="425" text-anchor="middle" fill="#f8ead7" font-family="Georgia, serif" font-size="28" letter-spacing="4">NOCTURNE</text>
+  <text x="450" y="655" text-anchor="middle" fill="#f8ead7" font-family="Georgia, serif" font-size="42" letter-spacing="5">DIFUSOR</text>
+</svg>
